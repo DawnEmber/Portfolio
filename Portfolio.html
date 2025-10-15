@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dawn Ember</title>
+    <link rel="shortcut icon" href="./Img/log.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "eM-2NZRrj4BUfXHpM",
+        });
+    })();
+</script>
+    <script src="./script.js"></script>
+</head>
+<body>
+    <nav>
+        <div id="log">
+            <img id="log_img" src="./Img/Log.svg" alt="DawnEmber log">
+            <p>Dawn Ember</p>
+        </div>
+        <ul>
+            <li><a href="#hero_container">Home</a></li>
+            <li><a href="#abt-us">Abouts Us</a></li>
+            <li><a href="#our-work">Our Work</a></li>
+            <li><a href="#contactUs">Contact Us</a></li>
+        </ul>
+    </nav>
+    <div id="customAlert" class="alert">
+        <div class="modal-content">
+          <img src="./Img/X Icon.png" alt="wrong-icon">
+          <div class="content">
+            <h2>Oops!</h2>
+            <p>We need those required details before we can send this off </p>
+          </div>
+          <button onclick="alertclose()" class="wrong-button"> X </button>
+        </div>
+    </div>
+    <div id="confirm-bar" class="confirm">
+        <div class="confirm-content">
+          <img src="./Img/R-icon.png" alt="right-icon">
+          <div class="content">
+            <h2>Got it! </h2>
+            <p>Your message just landed safely in our inbox. We’ll get back to you soon.</p>
+          </div>
+          <button onclick="closeModal()" class="wrong-button"> X </button>
+        </div>
+    </div>
+    <section id="hero_container">
+            <div id="hero_cont">
+                <h1>
+                    Design and C <span class="space"></span>
+                    <img src="./Img/code-o.png" alt="O" class="img-letter-code"> 
+                    de. Creativity and Logic. Tw <span class="space1"></span>
+                    <img src="./Img/two-o.png" alt="O" class="img-letter-two"> 
+                    minds, one spark.
+                </h1>
+                <p>A two-person team blending design and development to create fun, functional, and user-friendly digital experiences.</p>
+                <span id="btn">
+                    <a href="#our-work"><button id="btn_our_wrk">See Our Work</button></a>
+                    <a href="#contactUs"><button id="btn_ami">
+                        <img id="btn_img" src="./img/cursor.png" alt="">
+                        <span>Let’s Collaborate</span>
+                    </button></a>
+                </span>
+            </div>
+    </section>
+    <section id="abt-us">
+        <div id="content">
+            <h1>Meet the <span>Duo</span></h1>
+            <img src="./Img/Line.png" alt="">
+            <p>Bridging the gap between aesthetics and functionality, one project at a time.</p>
+        </div>
+        <div id="us">
+        <div class="card">
+            <img id="normal" src="./Img/suriya.png" alt="suriya">
+            <img id="hover" src="./Img/suriya_hpy.png" alt="suriya">
+            <img id="card_bg" src="./Img/cardbg.png" alt="">
+            <div id="profile">
+                <h3>Anbu</h3>
+                <h4>Designer</h4>
+                <p>Crafting pixel-perfect designs that tell stories and evoke emotion. From concept to completion, every detail matters.</p>
+                <ul>
+                    <li>Figma</li>
+                    <li>Framer</li>
+                    <li>Web Design</li>
+                    <li>UI/UX Design</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+        <img id="normal1" src="./Img/aswin.png" alt="aswin">
+            <img id="hover1" src="./Img/aswin_hpy.png" alt="aswin">
+            <img id="card_bg" src="./Img/cardbg.png" alt="" >
+            <div id="profile">
+                <h3>Aswin</h3>
+                <h4>Full Stack Developer</h4>
+                <p>Building robust, scalable solutions that bring designs to life. Clean code, seamless functionality, and optimized performance.</p>
+                <ul>
+                    <li>React</li>
+                    <li>Node JS</li>
+                    <li>Express JS</li>
+                    <li>Mongo DB</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </section>
+    <section id="our-work">
+            <div class="text-content">
+                <h1>Design Sandbox</h1>
+                <img src="./Img/Line.png" alt="">
+                <p>Where Ideas Take - Visual Form Our creative sandbox where we experiment, iterate, and perfect the visual language of digital experiences.</p>
+            </div>
+            <div id="wrk">
+                <a href=" https://www.behance.net/gallery/213416713/EZ-Habit-Heuristic-Evaluation" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/s-p1.png" alt="">
+                        <div class="hover-card">
+                            <h4>EZ Habit</h4>
+                            <h6>Heuristic Evaluation</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+                <a href="https://www.behance.net/gallery/214461881/Nudge-Micro-Learning-App-Landing-Page-Design" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/s-p2.png" alt="">
+                        <div class="hover-card">
+                            <h4>Nudge</h4>
+                            <h6>Landing Page Design</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+                <a href=" https://www.behance.net/gallery/210723021/LitHub-Responsive-E-Com-Web-Design" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/s-p3.png" alt="">
+                        <div class="hover-card">
+                            <h4>LitHub</h4>
+                            <h6>E-Commerce Website</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+            </div>
+            <div class="text-content">
+                <h1>Development Zone</h1>
+                <img src="./Img/Line.png" alt="">
+                <p>From concept to deployment, we architect scalable applications that power modern digital experiences.</p>
+            </div>
+            <div id="wrk">
+                <a href="https://github.com/Aswin-srini/Python" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/a-p1.png" alt="">
+                        <div class="hover-card">
+                            <h4>Stone Paper Scissors</h4>
+                            <h6>Python Console Application</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+                <a href="https://github.com/Aswin-srini/Nolan" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/a-p2.png" alt="">
+                        <div class="hover-card">
+                            <h4>Nolan Filmography</h4>
+                            <h6>Web App</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+                <a href="https://github.com/Aswin-srini/EventManager" target="_blank" rel="noopener noreferrer">
+                <div class="wrk-frm">
+                    <div  class="frm-img">
+                        <img class="wrk-img" src="./Img/a-p3.png" alt="">
+                        <div class="hover-card">
+                            <h4>Event Manager</h4>
+                            <h6>Web API</h6>
+                        </div>
+                        <img class="arrow" src="./Img/arrows.png" alt="">
+                    </div>       
+                </div>
+                </a>
+            </div>
+    </section>
+    <section id="cnt">
+        <div class="text-content">
+            <h1>Our Spark Factor</h1>
+            <img src="./Img/Line.png" alt="">
+        </div>
+        <div id="scl-card">
+            <div id="inside">
+                <h1>01</h1>
+                <p>You get a designer + developer duo <span> → no “lost in translation” moments.</span></p>
+            </div>
+        </div>
+        <div id="scl-card">
+            <div id="inside">
+                <h1>02</h1>
+                <p>We’re small <span> → you talk to us directly (no middlemen).</span></p>
+            </div>
+        </div>
+        <div id="scl-card">
+            <div id="inside">
+                <h1>03</h1>
+                <p>We actually enjoy this stuff <span> → so you’ll enjoy working with us.</span></p>
+            </div>
+        </div>
+        <div id="scl-card">
+            <div id="inside">
+                <h1>04</h1>
+                <p>Millennial + Gen Z <span> → two perspectives, one spark.</span></p>
+            </div>
+        </div>
+        <div id="scl-card">
+            <div id="inside">
+                <h1>05</h1>
+                <p>Experience working with startup teams on AI-focused products <span> → we stay trend-aware and bring that future-ready energy to every project.</span></p>
+            </div>
+        </div>
+    </section>
+    <section id="contactUs">
+        <h1>Let's Create Something Amazing</h1>
+        <img  id="line" src="./Img/Line.png" alt="">
+        <p>Have a project in mind? We'd love to hear about it. Drop us a message and let's start building together.”</p>
+        <div id="form">
+            <img id="bg" src="./Img/letter_send.png" alt="">
+            <h4>Contact Us</h4>
+            <input id="name" type="text" placeholder="Name*">
+            <input id="mail" type="text" placeholder="Email*">
+            <input id="mbl" type="text" placeholder="Mobile*">
+            <label for="msg">Message*</label>
+            <textarea name="message" placeholder="Message" id="msg"></textarea>
+            <button id="sub_but" onclick="getFormData()">Contact Us</button>
+        </div>
+    </section>
+    <footer>
+        <div id="footer-content">
+        <div id="left">
+            <img src="./Img/vertical log.png" alt="log">
+            <p>A creative duo crafting beautiful digital experiences. From concept to launch, we bring ideas to life with design excellence and technical precision.</p>
+        </div>
+        <div id="nav">
+            <ul>
+            <li>Navigation</li>
+            <li><a href="#abt-us">About</a></li>
+            <!-- <li><a href="#">Design</a></li> -->
+            <!-- <li><a href="#">Development</a></li> -->
+            <li><a href="#our-work">Project</a></li>
+            <li><a href="#contactUs">Contact Us</a></li>
+            </ul>
+            <ul>
+            <li>Connects</li>
+            <li><a href="https://mail.google.com/mail/?view=cm&to=hello@dawnember.in" target="_blank" rel="noopener noreferrer">Email Us</a></li>
+            <li><a href="www.linkedin.com/in/dawnember">Linkedin</a></li>
+            <li><a href="https://github.com/Aswin-srini">Git Hub</a></li>
+            </ul>
+        </div>
+        </div>
+        <div id="footer-snd-cnt">
+        <p>Made with ♥️ by Anbu & Aswin • © 2025 DawnEmber</p>
+        <a href="#hero_container"><img src="./Img/fotter arrow.png" alt="arrow"></a>
+        </div>
+    </footer>
+</body>
+</html>
