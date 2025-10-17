@@ -112,3 +112,5 @@ function sendThnx() {
   emailjs.send("service_6ldlxe6", "template_0kp6x03", params)
     .catch((error) => console.error("Second email failed:", error));
 }
+
+
