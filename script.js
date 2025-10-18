@@ -48,6 +48,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Small mobile Nav bar 
+  let bur = document.getElementById("top-sm-bur")
+  let cls = document.getElementById("top-sm-cls")
+  let nav = document.querySelector("#sml-nav ul")
+  let lst = document.querySelectorAll("#sml-nav ul li a")
+  bur.addEventListener("click", () => {
+    bur.style.display = "none"
+    cls.style.display = "flex"
+    nav.style.display = "initial"
+  });
+  cls.addEventListener("click", () => {
+    cls.style.display = "none"
+    bur.style.display = "flex"
+    nav.style.display = "none"
+  });
+  lst.forEach(link => {
+  link.addEventListener("click", () => {
+    nav.style.display = "none";
+    cls.style.display = "none"
+    bur.style.display = "flex"
+  });
+});
 });
 
 // Modal functions
@@ -112,3 +135,6 @@ function sendThnx() {
   emailjs.send("service_6ldlxe6", "template_0kp6x03", params)
     .catch((error) => console.error("Second email failed:", error));
 }
+
+
+
