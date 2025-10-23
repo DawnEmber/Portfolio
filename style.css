@@ -447,7 +447,7 @@ body{
 }
 
 .text-content{
-    width: 502px;
+    width: 100%;
     margin: 0 auto;
 }
 .text-content h1{
@@ -462,15 +462,14 @@ body{
 .text-content p{
     font-size: 16px;
     color: #c2c2c2;
-    width: 502px;
+    width: 100%;
     margin-bottom: 92px;
     font-weight: lighter;
 }
 
 #wrk{
     display: flex;
-    align-items: center;     
-    gap: 24px;             
+    align-items: center;           
     margin-top: 40px;
     position: relative;
     justify-content: space-around;
@@ -489,7 +488,7 @@ body{
     display: flex;
     column-gap: 70px;
     height: 408px;
-    width: 460px;
+    width: 100%;
     position: relative;
 }
 
@@ -502,7 +501,6 @@ body{
     overflow: hidden;
     border-radius: 12px;
     top: 48px;
-    left: 6%;
 }
 .wrk-img{
     background-size: cover;
@@ -595,7 +593,7 @@ body{
 }
 
 #scl-card h1{
-    max-width: 114px;
+    width: 114px;
     color: rgb(255, 255, 255);
     font-size: 120px;
     align-content: center;
@@ -675,7 +673,7 @@ body{
 
 #form input{
     height: 64px;
-    width: 470px;
+    width: 80%;
     text-align: left;
     justify-content: center;
     margin: 0 44px;
@@ -713,7 +711,7 @@ body{
 
 #contactUs #msg{
     height: 146px;
-    width: 470px;
+    width: 80%;
     text-align: start;
     vertical-align: top;
     resize: none;
@@ -737,7 +735,7 @@ body{
 }
 
 #contactUs #sub_but{
-    width: 510px;
+    width: 87%;
     height: 55px;
     border-radius: 6px;
     margin: 0 44px;
@@ -880,21 +878,21 @@ footer img{
 
 /* -----------------------------Break-Points------------------------------ */
 /* Desktop - XL */
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
     #wrk {
     gap: 0px;
     }
     .wrk-frm {
     height: 356px;
-    width: 400px;
+    width: 100%;
     }
     .wrk-img {
     height: 260px;
-    width: 333px;
+    width: 100%;
     }
     .frm-img {
     height: 278px;
-    width: 353px;
+    width: 100%
     }
     .hover-card {
     width: 276px;
@@ -919,12 +917,12 @@ footer img{
 }
 #dsk-nav{
     justify-content: center;
-    column-gap: 128px;
+    column-gap: 112px;
     padding: 0px;
-    width: 1030px;
+    width: 100%;
 }
 #dsk-nav ul{
-    margin: 26px 128px 26px 0px;
+    margin: 26px 12px 26px 0px;
     column-gap: 32px;
     padding: 0px;
     }
@@ -943,9 +941,17 @@ footer img{
     
 }
 .wrk-frm {
-    height: 360px;
-    width: 404px;
-}
+    height: 356px;
+    width: 400px;
+    }
+    .wrk-img {
+    height: 260px;
+    width: 333px;
+    }
+    .frm-img {
+    height: 278px;
+    width: 353px;
+    }
 .hover-card{
     transform: translate(14px, -118px);
 }
@@ -995,11 +1001,12 @@ footer img{
 /* Tablet - M */
 @media (max-width: 768px) {
     #dsk-nav {
-        column-gap: 96px;
-        width: 834px;
+        column-gap: 60px;
+        width: 100%;
     }
     #dsk-nav ul {
         margin: 26px 24px 26px 0px;
+        column-gap: 18px;
     }
     #dsk-nav ul li {
         padding: 10px 0px;
@@ -1012,109 +1019,244 @@ footer img{
     #log p{
         margin: 10px 16px;
     }
+    #hero_cont h1 {
+        width: 100%;
+    }
+    #contactUs img {
+    width: 30%;
+    padding: 0 200px;
+    align-items: center;
+    }
+    #form input {
+    width: 78%;
+    }
+    #contactUs #msg {
+        width: 78%;
+    }
+    #contactUs #sub_but {
+        width: 85%;
+    }
 }
 
 /* Phone - S */
 @media (max-width: 576px) {
 
-#log{
-    display: flex;
-    align-items: center;
-    margin: 12px 0px 12px 0px;
-}
-#log p{
-    display: none;
-}
 #dsk-nav{
-    justify-content: center;
-    column-gap: 128px;
-    padding: 0px;
-    width: 100%;
-}
-#dsk-nav ul{
-    padding: 0px;
-}
-#dsk-nav ul li{
-    justify-content: space-between;
-}
-#hero_cont {
-    position: relative;
-    width: 100%;
-    height: 857px;
-    justify-content: center;
-    color: #fff;
-    padding: 160px 48px 200px 48px;
-}
-#hero_cont h1 {
-    font-size: 48px;
-    text-align: center;
-    margin-bottom: 54px;
-    width: 100%;
-}
-#hero_cont .space {
-    width: 10px;
-}
-#hero_cont .img-letter-code {
-    margin: 18px -38px;
-}
-#us{
+    display: none;
+    }
+    #sml-nav{
+    position:fixed;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    align-items: center;
-}
-#contactUs {
+    background: #0b0b0b66;
+    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(10px); 
     width: 100%;
-}
-#wrk{
+    z-index: 1000;
+    }
+    #top-nav{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 40px;
+    }
+
+    #top-sm-log{
+    width: 22px;
+    height: 32px;
+    padding: 16px;
+    }
+    #top-sm-cls,#top-sm-bur{
+    width: 18px;
+    height: 18px;
+    padding: 16px;
+    }
+
+    #top-sm-cls{
+    display: none;
+    }
+
+    #sml-nav ul{
+    margin: 8px 16px 8px -26px;
+    padding-bottom: 16px;
+    display: none;
+    }
+
+    #sml-nav ul li{
+    color: #eaeaea;
+    padding: 12px 16px;
+    font-family:"K2D" , sans-serif;
+    list-style: none;
+    text-align: center;
+    font-weight: lighter;
+    justify-content: space-between;
+    border: 1px solid transparent;
+    margin-left: -20px;
+    }
+
+    #sml-nav ul li a{
+        text-decoration: none;
+        color: #ffffff;
+        }
+    #hero_cont {
+        position: relative;
+        width: 100%;
+        height: 857px;
+        justify-content: center;
+        color: #fff;
+        padding: 160px 36px 200px 36px;
+    }
+    #hero_cont h1 {
+        font-size: 48px;
+        text-align: center;
+        margin-bottom: 54px;
+        width: 100%;
+    }
+    #hero_cont .space {
+        width: 10px;
+    }
+    #hero_cont .img-letter-code {
+        margin: 18px -38px;
+    }
+    #us{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+    .card {
+        flex-direction: column;
+        align-items: center;
+        width: 348px;
+        height: 510px;
+    }
+    #abt-us #content p
+    {
+        width: 396px;
+    }
+    .card #profile h3,
+    .card #profile h4,
+    .card #profile p{
+        text-align: center;
+    }
+    #contactUs {
+        width: 100%;
+        height: 100%;
+    }
+    .card #card_bg {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+    #wrk {
+    margin-top: 20px;
     flex-direction: column;
-   
-}
-.hover-card{
-    transform: translate(4px, -118px);
-}
-.arrow{
-    transform: translate(300px, -380px);
-}
-#contactUs img {
-    width: 174px;
-}
+    }
+    .wrk-frm {
+    height: 212px;
+    width: 200px;
+    }
+    .frm-img {
+    height: 144px;
+    width: 184px;
+    background-size: cover;;
+    position: relative;
+    border-radius: 12px;
+    }
+    .wrk-img{
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+    height: 144px;
+    width: 184px;
+    }
+    
 #nav {
     width: 220px;
     column-gap: 0px;
 }
-.hover-card{
-    transform: translate(14px, -118px);
+.hover-card {
+        width: 108px;
+        height: 26px;
+        transform: translate(14px, -84px);
+        }
+.hover-card h4 {
+    font-size: 12px;
 }
+.hover-card h6 {
+    font-size: 10px;
+}
+#contactUs img {
+    display: none;
+}        
 .arrow{
     transform: translate(284px, -360px);
 }
 #cnt {
     margin: 200px 0;
 }
-#scl-card h1{
-    font-size: 90px;
+.text-content h1 {
+    font-size: 40px;
 }
-#scl-card p{
-    max-width: 900px;
+#scl-card {
+    display: flex;
+}
+#inside {
+    flex-direction: column;
+    width: 100%;
+    }
+#cnt .text-content {
+    top: 10%;
+    width: 100%;
+}
+#scl-card h1 {
+    width: 100%;
+    font-size: 60px;
+    text-align: center;
+    margin: 0;
+}
+#scl-card p {
     font-size: 18px;
+    text-align: center;
+    padding: 2px;
+    width: 98%;
 }
 #hero_cont .img-letter-two{
     margin: 14px -44px;
 }
-
+#contactUs img{
+    width: 16%;
+}
+#contactUs h1 {
+    padding: 0 100px;
+}
 #form input {
-    margin: 4px 32px;
+    width: 72%;
 }
 #contactUs #msg {
-    margin: 4px 32px;
+    width: 72%;
 }
 #contactUs #sub_but {
-    margin: 4px 32px;
+    width: 81%;
 }
+#footer-content {
+    flex-direction: column;
+    }
+    #left {
+    width: 220px;
+    }
+    #nav {
+    flex-direction: column;
+    }
+    #nav ul{
+    margin-left: -38px;
+    }
+    .modal-content, .confirm-content{
+        max-width: 220px;
+    }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 376px) {
     #dsk-nav{
     display: none;
     }
@@ -1185,7 +1327,7 @@ footer img{
     }
     #hero_cont .img-letter-two {
     width: 28px;
-    margin: 6px -32px;
+    margin: 6px -26px;
     }
     #hero_cont p {
     font-size: 14px;
@@ -1310,12 +1452,11 @@ footer img{
     }
     #scl-card h1 {
     font-size: 60px;
-    text-align: end;
+    text-align: center;
     }
     #scl-card p {
     font-size: 18px;
     text-align: center;
-    padding: 12px;
     }
     #contactUs h1 {
     padding: 0 0px;
@@ -1328,13 +1469,13 @@ footer img{
     margin: 30px 18px;
     }
     #form input {
-    width: auto;
+    width: 66%;
     }
     #contactUs #msg {
-    width: 200px;
+    width: 66%;
     }
     #contactUs #sub_but {
-    width: 240px;
+    width: 76%;
     }
     #footer-content {
     flex-direction: column;
