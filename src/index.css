@@ -1,0 +1,69 @@
+/* Reset old template styles */
+#root { width: 100%; max-width: 100%; margin: 0; border: none; min-height: unset; display: block; text-align: left; box-sizing: border-box; }
+h1, h2 { font-weight: inherit; color: inherit; margin: 0; }
+p { margin: 0; }
+
+/* ─── Layout grids (mobile-first) ───────────────────────────────────── */
+
+.dn-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.dn-work-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.dn-person-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.dn-person-portrait {
+  min-height: 340px;
+}
+.dn-person-grid.flip .dn-person-portrait { order: 0; }
+.dn-person-grid.flip .dn-person-details  { order: 1; }
+
+.dn-spark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dn-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.dn-contact-image { order: -1; max-height: 260px; overflow: hidden; }
+
+.dn-contact-inner-grid { grid-template-columns: 1fr; }
+.dn-contact-divider { display: none; }
+
+/* ─── Mobile nav tightening ─────────────────────────────────────────── */
+@media (max-width: 599px) {
+  .dn-nav-band { padding-left: 2px !important; padding-right: 2px !important; }
+  .dn-nav-item { padding: 10px 2px 12px !important; gap: 2px !important; }
+  .dn-nav-label { font-size: 18px !important; margin-top: 2px !important; }
+}
+
+/* ─── Tablet (≥ 600px) ───────────────────────────────────────────────── */
+@media (min-width: 600px) {
+  .dn-work-grid         { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .dn-person-grid       { grid-template-columns: 0.74fr 1.26fr; }
+  .dn-person-portrait   { min-height: 440px; }
+  .dn-person-grid.flip  { grid-template-columns: 1.26fr 0.74fr; }
+  .dn-person-grid.flip .dn-person-portrait { order: 1; }
+  .dn-person-grid.flip .dn-person-details  { order: 0; }
+  .dn-spark-grid        { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .dn-contact-grid      { grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px,4cqw,52px); }
+  .dn-contact-image     { order: 0; max-height: none; }
+  .dn-contact-inner-grid { grid-template-columns: 0.82fr 32px 1.1fr; align-items: stretch; }
+  .dn-contact-divider { display: block; }
+}
