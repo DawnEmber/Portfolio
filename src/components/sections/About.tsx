@@ -17,17 +17,6 @@ const Chip = ({ label }: { label: string }) => (
   </span>
 );
 
-const cornerCode = (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="8 7 3 12 8 17" /><polyline points="16 7 21 12 16 17" />
-  </svg>
-);
-const cornerPen = (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={orange} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 4l6 6L9 21l-6 1 1-6z" /><path d="M13 5l6 6" />
-  </svg>
-);
-
 /* Index marks — kolam-lattice motifs (the diamond-knot pattern used
    throughout the site's Tamil-inspired ornamentation) standing in for
    plain "01"/"02" numerals, one loop for the first row, two interlocked
@@ -54,11 +43,11 @@ const kolamIndexTwo = (
 interface PersonRowProps {
   indexMark: React.ReactNode; img: string; imgPos: string;
   name: string; role: string; tagline: string;
-  skills: string[]; corner: React.ReactNode;
+  skills: string[];
   kolam: React.ReactNode; flip: boolean;
 }
 
-function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, corner, kolam, flip }: PersonRowProps) {
+function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam, flip }: PersonRowProps) {
   const portrait = (
     <div key="portrait" className="dn-person-portrait" style={{ position: 'relative', overflow: 'hidden' }}>
       <img src={img} alt={name} style={{
@@ -73,7 +62,6 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, corner
     <div key="details" style={{ padding: '36px clamp(24px,4cqw,42px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
         {indexMark}
-        {corner}
       </div>
       <div style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: 44, lineHeight: 1, color: '#F8ECE0' }}>{name}</div>
       <div style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontSize: 20, color: orange, marginTop: 8 }}>{role}</div>
@@ -112,7 +100,6 @@ export default function About() {
           name="Anbu" role="Designer"
           tagline="Crafting pixel-perfect designs that tell stories and evoke emotion. From concept to completion, every detail matters."
           skills={['Figma', 'Framer', 'Web Design', 'UI/UX Design']}
-          corner={cornerPen}
           kolam={kolamOrange(104)}
           flip={false}
         />
@@ -121,7 +108,6 @@ export default function About() {
           name="Aswin" role="Full Stack Developer"
           tagline="Building robust, scalable solutions that bring designs to life. Clean code, seamless functionality, and optimized performance."
           skills={['React', 'Node JS', 'Express JS', 'Mongo DB']}
-          corner={cornerCode}
           kolam={<img src={kolam2} alt="" style={{ width: 108, height: 108, objectFit: 'contain', opacity: 0.5, filter: 'sepia(1) saturate(3) hue-rotate(-15deg) brightness(0.75)', display: 'block' }} />}
           flip={true}
         />
