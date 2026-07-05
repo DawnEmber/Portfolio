@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { InkDivider } from '../common/TornPaperCard';
 import anbazhaganShot from '../../assets/images/Dr. Anbazhagan Website Desktop.png';
 import sgeShot from '../../assets/images/SGE desktop.png';
@@ -19,13 +20,17 @@ const iconCompressor = (
   </svg>
 );
 
-/* Simple laptop frame — screen shows the actual project screenshot,
-   cropped to its top (hero) portion, with a thin bezel + base bar. */
-const LaptopMock = ({ src, alt }: { src: string; alt: string }) => (
+/* Simple laptop frame — the screen shows the actual project screenshot like
+   a browser scrolled to the top of the page. objectFit:cover + height:100%
+   makes ANY screenshot fill the 16:10 window with no black gaps, regardless
+   of its native aspect ratio: wide heroes center-crop, tall full-page
+   captures show their top viewport. objectPosition defaults to 'top' but can
+   be overridden per project for an odd screenshot that needs a different focus. */
+const LaptopMock = ({ src, alt, objectPosition = 'top' }: { src: string; alt: string; objectPosition?: string }) => (
   <div style={{ position: 'relative', width: '100%', maxWidth: 420 }}>
     <div style={{ position: 'relative', borderRadius: '10px 10px 0 0', border: '7px solid #1c1c1c', borderBottom: 'none', overflow: 'hidden', background: '#000', boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6)' }}>
       <div style={{ width: '100%', aspectRatio: '16/10', overflow: 'hidden' }}>
-        <img src={src} alt={alt} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover', objectPosition: 'top' }} />
+        <img src={src} alt={alt} style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', objectPosition }} />
       </div>
     </div>
     <div style={{ height: 12, background: 'linear-gradient(180deg,#2a2a2a,#111)', borderRadius: '0 0 6px 6px', position: 'relative' }}>
@@ -56,18 +61,21 @@ const LeafSprig = ({ flip = false }: { flip?: boolean }) => (
   </svg>
 );
 
-interface ProjectRowProps {
-  idx: string; icon: React.ReactNode; name: string; category: string;
-  description: string; deliverables: string; shot: string; flip?: boolean;
+interface Project {
+  icon: React.ReactNode; name: string; category: string;
+  description: string; deliverables: string; shot: string;
+  objectPosition?: string;
 }
 
-function ProjectRow({ idx, icon, name, category, description, deliverables, shot, flip }: ProjectRowProps) {
+interface ProjectRowProps extends Project { idx: string; flip?: boolean; }
+
+function ProjectRow({ idx, icon, name, category, description, deliverables, shot, flip, objectPosition }: ProjectRowProps) {
   const media = (
     <div key="media" style={{ position: 'relative', display: 'flex', justifyContent: 'center', padding: '30px 10px' }}>
       <Blob />
       <LeafSprig flip={flip} />
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <LaptopMock src={shot} alt={name} />
+        <LaptopMock src={shot} alt={name} objectPosition={objectPosition} />
       </div>
     </div>
   );
@@ -106,6 +114,30 @@ function ProjectRow({ idx, icon, name, category, description, deliverables, shot
   );
 }
 
+/* ─── Projects ──────────────────────────────────────────────────────────
+   To add a new project, append one entry here. Numbering (01, 02, …),
+   the alternating left/right layout, the divider between rows, and the
+   perfect-fit laptop mock are all applied automatically.
+   Optional `objectPosition` (default 'top') fine-tunes the screenshot crop. */
+const projects: Project[] = [
+  {
+    icon: iconHeal,
+    name: 'Dr. K. V. Anbazhagan',
+    category: 'Legacy Website',
+    description: 'A tribute website celebrating 70 years of Dr. K. V. Anbazhagan — a life of healing, love, and service.',
+    deliverables: 'Web Design, Development',
+    shot: anbazhaganShot,
+  },
+  {
+    icon: iconCompressor,
+    name: 'SGE Air Compressors',
+    category: 'Industrial Website',
+    description: 'A decade of building compressors out of Coimbatore — a catalogue-driven site for an industrial manufacturer.',
+    deliverables: 'Web Design, Development, SEO',
+    shot: sgeShot,
+  },
+];
+
 export default function Work() {
   return (
     <section id="work" style={{ padding: `30px ${pad} 44px` }}>
@@ -119,22 +151,16 @@ export default function Work() {
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 34 }}>
-        <ProjectRow
-          idx="01" icon={iconHeal}
-          name="Dr. K. V. Anbazhagan" category="Legacy Website"
-          description="A tribute website celebrating 70 years of Dr. K. V. Anbazhagan — a life of healing, love, and service."
-          deliverables="Web Design, Development"
-          shot={anbazhaganShot}
-        />
-        <InkDivider style={{ margin: '10px 0' }} />
-        <ProjectRow
-          idx="02" icon={iconCompressor}
-          name="SGE Air Compressors" category="Industrial Website"
-          description="A decade of building compressors out of Coimbatore — a catalogue-driven site for an industrial manufacturer."
-          deliverables="Web Design, Development, SEO"
-          shot={sgeShot}
-          flip
-        />
+        {projects.map((project, i) => (
+          <Fragment key={project.name}>
+            {i > 0 && <InkDivider style={{ margin: '10px 0' }} />}
+            <ProjectRow
+              idx={String(i + 1).padStart(2, '0')}
+              flip={i % 2 === 1}
+              {...project}
+            />
+          </Fragment>
+        ))}
       </div>
     </section>
   );

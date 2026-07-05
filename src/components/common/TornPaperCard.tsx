@@ -73,8 +73,11 @@ export default function TornPaperCard({ children }: { children: ReactNode }) {
     <div style={{
       position: 'relative', width: '82vw', maxWidth: 1140, margin: '0 auto', zIndex: 3,
     }}>
-      {/* Inner: overflow:hidden clips grain/mottle — torn overlays are siblings outside */}
-      <div style={{ position: 'relative', overflow: 'hidden', containerType: 'inline-size' }}>
+      {/* Inner: overflow:clip clips grain/mottle — torn overlays are siblings
+          outside. Must be `clip`, NOT `hidden`: `hidden` would make this a
+          scroll container and silently break `position: sticky` in the
+          sections below (e.g. SparkFactor's pinned scroll scene). */}
+      <div style={{ position: 'relative', overflow: 'clip', containerType: 'inline-size' }}>
         <div style={{ position: 'absolute', inset: 0, background: '#0a0a0a' }} />
         <div style={{ position: 'absolute', inset: 0, filter: 'url(#deGrain)', opacity: 0.44, mixBlendMode: 'screen', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', inset: 0, filter: 'url(#deMottle)', opacity: 0.28, mixBlendMode: 'multiply', pointerEvents: 'none' }} />

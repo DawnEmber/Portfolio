@@ -21,8 +21,10 @@ export default function App() {
 
       {/* Scrollable content */}
       <div style={{ position: 'relative', zIndex: 3, paddingBottom: 64 }}>
-        {/* Brand mark — on cream background, centred above the card */}
-        <div style={{ textAlign: 'center', paddingTop: 32, paddingBottom: 28 }}>
+        {/* Brand mark — on cream background, centred above the card. zIndex 4
+            keeps it above the card (zIndex 3) so the torn-paper top edge's cream
+            overlay can't paint over the wordmark. */}
+        <div style={{ position: 'relative', zIndex: 4, textAlign: 'center', paddingTop: 32, paddingBottom: 28 }}>
           <a href="#home" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <img src={logoIcon} alt="" style={{ width: 36, height: 36, objectFit: 'contain', display: 'block' }} />
             <span style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 20, color: '#191919' }}>DawnEmber</span>
