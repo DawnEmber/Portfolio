@@ -36,8 +36,23 @@ p { margin: 0; }
 .dn-person-grid.flip .dn-person-portrait { order: 0; }
 .dn-person-grid.flip .dn-person-details  { order: 1; }
 
-.dn-contact-info-grid {
+/* Contact section: three named grid areas (header+form, info, image)
+   rearranged per breakpoint — same DOM, no duplication. Mobile stacks all
+   three; tablet keeps header+form on top with info/image paired below;
+   desktop reverts to the original side-by-side layout, with header+form+
+   info stacked in one column and the image spanning the full height
+   beside it. */
+.dn-contact-layout {
+  display: grid;
+  gap: 30px;
   grid-template-columns: 1fr;
+  grid-template-areas: "headerform" "info" "image";
+  /* Centers the block once the section is wider than this — only "when
+     necessary" (mobile/tablet, where content doesn't fill the section) —
+     desktop's two-column layout below overrides this back to full width,
+     since there it deliberately uses the whole card width. */
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* ─── Mobile nav tightening ─────────────────────────────────────────── */
@@ -68,8 +83,22 @@ p { margin: 0; }
   .dn-person-grid.flip .dn-person-details  { order: 0; }
 }
 
-/* Contact info list pairs up with the coffee illustration side by side
-   once there's enough room for both to breathe. */
-@media (min-width: 560px) {
-  .dn-contact-info-grid { grid-template-columns: 1fr 1fr; }
+/* Tablet: header+form stays full width on top; info list pairs up with
+   the coffee illustration side by side underneath. */
+@media (min-width: 560px) and (max-width: 899px) {
+  .dn-contact-layout {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "headerform headerform" "info image";
+  }
+}
+
+/* Desktop: back to the original side-by-side layout — header+form+info
+   stacked in a left column, image spanning the full height beside it. */
+@media (min-width: 900px) {
+  .dn-contact-layout {
+    max-width: none;
+    grid-template-columns: 1.02fr 0.98fr;
+    gap: clamp(28px,4cqw,52px);
+    grid-template-areas: "headerform image" "info image";
+  }
 }

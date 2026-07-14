@@ -107,15 +107,14 @@ export default function Contact() {
   return (
     <>
       <section id="contact" style={{ padding: `58px ${pad} 54px` }}>
-        {/* Shared maxWidth so the form block and the info+image row below
-            share one left edge and, once the section is wider than this,
-            center together as a single unit instead of the form clinging
-            to the left edge with a growing gap of empty space beside it. */}
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        {/* Header + form come first (form moved up, no longer buried below
-            the contact-info list) — the info list and the coffee
-            illustration now pair up together underneath, side by side. */}
-        <Reveal style={{ maxWidth: 640 }}>
+        {/* Named grid areas so the same four blocks (header+form, info,
+            image) can be rearranged per breakpoint via CSS alone, no DOM
+            duplication: mobile stacks all three; tablet keeps header+form
+            on top with info/image paired below it; desktop reverts to the
+            original side-by-side layout (header+form+info stacked in one
+            column, image spanning the full height beside it). */}
+        <div className="dn-contact-layout">
+        <Reveal style={{ maxWidth: 640, gridArea: 'headerform' }}>
           <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
           <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
             Let's talk{' '}
@@ -181,54 +180,52 @@ export default function Contact() {
           </form>
         </Reveal>
 
-        {/* Info list + coffee art, paired side by side */}
-        <Reveal delay={0.12} className="dn-contact-info-grid" style={{ display: 'grid', gap: 30, alignItems: 'center', marginTop: 46 }}>
-          <div style={{ position: 'relative', paddingLeft: 4 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
-              {infoItems.map(({ icon, label, lines }) => (
-                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-                  <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
-                    {icon}
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
-                    {lines.map(l => (
-                      <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {/* Social */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+        {/* Contact info list */}
+        <Reveal delay={0.12} style={{ position: 'relative', paddingLeft: 4, gridArea: 'info', alignSelf: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
+            {infoItems.map(({ icon, label, lines }) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
                 <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
-                  {icons.social}
+                  {icon}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
-                  <div style={{ display: 'flex', gap: 10 }}>
-                    {socialLinks.map(({ name, href, icon }) => (
-                      <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        width: 32, height: 32, borderRadius: '50%',
-                        border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
-                      }}>
-                        {icon}
-                      </a>
-                    ))}
-                  </div>
+                  <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
+                  {lines.map(l => (
+                    <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* Social */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+              <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+                {icons.social}
+              </div>
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
+                <div style={{ display: 'flex', gap: 10 }}>
+                  {socialLinks.map(({ name, href, icon }) => (
+                    <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      width: 32, height: 32, borderRadius: '50%',
+                      border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
+                    }}>
+                      {icon}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
+        </Reveal>
 
-          {/* Coffee art */}
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', width: '100%', maxWidth: 340 }}>
-              <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
-              <SteamRising />
-            </div>
+        {/* Coffee art */}
+        <Reveal delay={0.18} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image' }}>
+          <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'relative', width: '100%', maxWidth: 420 }}>
+            <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <SteamRising />
           </div>
         </Reveal>
         </div>
