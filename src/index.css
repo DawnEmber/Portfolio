@@ -73,6 +73,16 @@ p { margin: 0; }
   .dn-person-grid.flip  { grid-template-columns: 1.42fr 0.58fr; }
   .dn-person-grid.flip .dn-person-portrait { order: 1; }
   .dn-person-grid.flip .dn-person-details  { order: 0; }
+}
+
+/* Contact's side-by-side layout (form + coffee illustration) needs more
+   room than the 600px tablet breakpoint gives it — at tablet widths the
+   card itself is still fairly narrow (82vw of ~850px), and cramming the
+   contact-info column, a vertical divider, the form fields AND the
+   illustration into that space all at once left everything squeezed and
+   overlapping. Pushed this specific layout out to 900px; below that the
+   illustration stacks below the form (mobile-style), same as before. */
+@media (min-width: 900px) {
   .dn-contact-grid      { grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px,4cqw,52px); }
   .dn-contact-image     { order: 0; max-height: none; }
   .dn-contact-inner-grid { grid-template-columns: 0.82fr 32px 1.1fr; align-items: stretch; }
