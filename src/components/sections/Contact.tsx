@@ -34,27 +34,6 @@ const SteamRising = () => (
   </div>
 );
 
-/* Hand-drawn ornamental vertical divider — SVG instead of the raster PNG,
-   which had blurred glow margins that got cropped/cut off at odd points.
-   Lines flex to fill whatever height the row needs; the knot ornament in
-   the middle stays fixed size, so it always fits perfectly, never crops. */
-const OrnamentalDivider = () => (
-  <div className="dn-contact-divider" style={{ height: '100%', width: 40, opacity: 0.4 }}>
-    {/* Short lead-in so the flourish sits near the top, not centered */}
-    <div style={{ flex: '0 0 20px', width: 1.5, background: 'linear-gradient(180deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
-    {/* Single simple loop-knot, fully vector so it never blurs, crops,
-        or misaligns at any height. */}
-    <svg width="26" height="30" viewBox="0 0 26 30" style={{ flex: '0 0 auto' }}>
-      <path
-        d="M13 0 V11 C8 6 3 8 3 12 C3 16.5 9 16 13 11 C17 16 23 16.5 23 12 C23 8 18 6 13 11 V30"
-        fill="none" stroke="#E6C8AC" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"
-        filter="url(#deRough)"
-      />
-    </svg>
-    <div style={{ flex: 1, minHeight: 12, width: 1.5, background: 'linear-gradient(0deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
-  </div>
-);
-
 const icons = {
   mail: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8ECE0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -128,128 +107,125 @@ export default function Contact() {
   return (
     <>
       <section id="contact" style={{ padding: `58px ${pad} 54px` }}>
-        <div className="dn-contact-grid">
-          {/* Left */}
-          <Reveal>
-            <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
-            <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
-              Let's talk{' '}
-              <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>over a filter.</em>
-            </h2>
-            <DrawLine color={orange} style={{ width: 60, margin: '18px 0 22px' }} />
-            <p style={{ fontSize: 15.5, color: '#F8ECE0', maxWidth: 420, margin: '0 0 34px', lineHeight: 1.6 }}>
-              Have a project in mind or just want to say hi?<br />
-              Drop us a message. We'd love to hear from you.
-            </p>
+        {/* Header + form come first (form moved up, no longer buried below
+            the contact-info list) — the info list and the coffee
+            illustration now pair up together underneath, side by side. */}
+        <Reveal style={{ maxWidth: 640 }}>
+          <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
+          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
+            Let's talk{' '}
+            <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>over a filter.</em>
+          </h2>
+          <DrawLine color={orange} style={{ width: 60, margin: '18px 0 22px' }} />
+          <p style={{ fontSize: 15.5, color: '#F8ECE0', maxWidth: 420, margin: '0 0 34px', lineHeight: 1.6 }}>
+            Have a project in mind or just want to say hi?<br />
+            Drop us a message. We'd love to hear from you.
+          </p>
 
-            <div className="dn-contact-inner-grid" style={{ display: 'grid', gap: 30, alignItems: 'start' }}>
-              {/* Contact info list */}
-              <div style={{ position: 'relative', paddingLeft: 4 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
-                  {infoItems.map(({ icon, label, lines }) => (
-                    <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-                      <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+          {/* Form — every field gets a hand-drawn wobbly border */}
+          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 460 }}>
+            <RoughField>
+              <input
+                type="text" placeholder="Your name" required
+                value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                style={fieldStyle}
+              />
+            </RoughField>
+            <RoughField>
+              <input
+                type="tel" placeholder="Mobile number" required
+                value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                style={fieldStyle}
+              />
+            </RoughField>
+            <RoughField>
+              <input
+                type="email" placeholder="Email address" required
+                value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                style={fieldStyle}
+              />
+            </RoughField>
+            <RoughField>
+              <textarea
+                placeholder="How can we help?" required rows={3}
+                value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                style={{ ...fieldStyle, resize: 'vertical', minHeight: 84, fontFamily: "'Hanken Grotesk',sans-serif", display: 'block' }}
+              />
+            </RoughField>
+
+            {/* Rough hand-painted pill — double outline like a sketched button */}
+            <button type="submit" style={{
+              position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12,
+              background: orange, color: '#fff', fontWeight: 600, fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase',
+              padding: '15px 26px', borderRadius: 999, boxShadow: '0 14px 30px -10px rgba(173,79,46,0.7)',
+              border: 'none', cursor: 'pointer', marginTop: 4,
+            }}>
+              <span style={{
+                position: 'absolute', inset: -4, borderRadius: 999,
+                border: '1.5px solid rgba(230,200,172,0.55)',
+                filter: 'url(#deRough)', pointerEvents: 'none',
+              }} />
+              Send message
+              {/* Same hand-drawn deInk stroke used for the hero CTA's
+                  down-chevron, so every arrow on the site reads sketched
+                  rather than a clean vector line. */}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" filter="url(#deInk)" /><polyline points="12 5 19 12 12 19" filter="url(#deInk)" />
+              </svg>
+            </button>
+          </form>
+        </Reveal>
+
+        {/* Info list + coffee art, paired side by side */}
+        <Reveal delay={0.12} className="dn-contact-info-grid" style={{ display: 'grid', gap: 30, alignItems: 'center', marginTop: 46 }}>
+          <div style={{ position: 'relative', paddingLeft: 4 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
+              {infoItems.map(({ icon, label, lines }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+                  <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+                    {icon}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
+                    {lines.map(l => (
+                      <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Social */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+                <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+                  {icons.social}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    {socialLinks.map(({ name, href, icon }) => (
+                      <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        width: 32, height: 32, borderRadius: '50%',
+                        border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
+                      }}>
                         {icon}
-                      </div>
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
-                        {lines.map(l => (
-                          <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* Social */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-                    <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
-                      {icons.social}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
-                      <div style={{ display: 'flex', gap: 10 }}>
-                        {socialLinks.map(({ name, href, icon }) => (
-                          <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            width: 32, height: 32, borderRadius: '50%',
-                            border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
-                          }}>
-                            {icon}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
-
-              {/* Ornamental vertical divider before the form fields */}
-              <OrnamentalDivider />
-
-              {/* Form — every field gets a hand-drawn wobbly border */}
-              <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <RoughField>
-                  <input
-                    type="text" placeholder="Your name" required
-                    value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    style={fieldStyle}
-                  />
-                </RoughField>
-                <RoughField>
-                  <input
-                    type="tel" placeholder="Mobile number" required
-                    value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                    style={fieldStyle}
-                  />
-                </RoughField>
-                <RoughField>
-                  <input
-                    type="email" placeholder="Email address" required
-                    value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                    style={fieldStyle}
-                  />
-                </RoughField>
-                <RoughField>
-                  <textarea
-                    placeholder="How can we help?" required rows={3}
-                    value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                    style={{ ...fieldStyle, resize: 'vertical', minHeight: 84, fontFamily: "'Hanken Grotesk',sans-serif", display: 'block' }}
-                  />
-                </RoughField>
-
-                {/* Rough hand-painted pill — double outline like a sketched button */}
-                <button type="submit" style={{
-                  position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12,
-                  background: orange, color: '#fff', fontWeight: 600, fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase',
-                  padding: '15px 26px', borderRadius: 999, boxShadow: '0 14px 30px -10px rgba(173,79,46,0.7)',
-                  border: 'none', cursor: 'pointer', marginTop: 4,
-                }}>
-                  <span style={{
-                    position: 'absolute', inset: -4, borderRadius: 999,
-                    border: '1.5px solid rgba(230,200,172,0.55)',
-                    filter: 'url(#deRough)', pointerEvents: 'none',
-                  }} />
-                  Send message
-                  {/* Same hand-drawn deInk stroke used for the hero CTA's
-                      down-chevron, so every arrow on the site reads sketched
-                      rather than a clean vector line. */}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" filter="url(#deInk)" /><polyline points="12 5 19 12 12 19" filter="url(#deInk)" />
-                  </svg>
-                </button>
-              </form>
             </div>
-          </Reveal>
+          </div>
 
-          {/* Right — coffee art */}
-          <Reveal delay={0.12} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Coffee art */}
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', width: '100%', maxWidth: 470 }}>
+            <div style={{ position: 'relative', width: '100%', maxWidth: 340 }}>
               <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
               <SteamRising />
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
 
         {/* Footer bar */}
         <div style={{ marginTop: 46, paddingTop: 30, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
