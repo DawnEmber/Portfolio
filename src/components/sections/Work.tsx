@@ -127,13 +127,13 @@ const projects: Project[] = [
 export default function Work() {
   return (
     <section id="work" style={{ padding: `30px ${pad} 44px` }}>
-      <Reveal>
+      <Reveal style={{ textAlign: 'center', maxWidth: 520, margin: '0 auto' }}>
         <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Our work</div>
         <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(28px,3.2vw,38px)', color: '#F8ECE0', margin: '14px 0 0', letterSpacing: '-0.01em' }}>
           Stories woven into the{' '}
           <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>kolam.</em>
         </h2>
-        <p style={{ fontSize: 15.5, color: '#D4B99A', maxWidth: 420, margin: '14px 0 0', lineHeight: 1.65 }}>
+        <p style={{ fontSize: 15.5, color: '#D4B99A', maxWidth: 420, margin: '14px auto 0', lineHeight: 1.65 }}>
           A few of the journeys we've been part of and the impact we've created together.
         </p>
       </Reveal>
