@@ -55,14 +55,17 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam,
       <img src={img} alt={name} style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%',
         objectFit: 'cover', objectPosition: imgPos,
-        /* These portraits are opaque RGB (no alpha channel) with a true-black
-           fill around the halftone cutout — mix-blend-mode:screen makes
-           true-black pixels contribute nothing, so that fill disappears into
-           the card instead of reading as a flat, ungrained rectangle against
-           the card's noisy grain/mottle texture (screen math: black + X = X,
-           unlike a brightness/contrast filter, which can't lift a true-zero
-           pixel value no matter the amount). */
-        mixBlendMode: 'screen',
+        /* These portraits shipped as opaque RGB (no alpha channel) with a
+           true-black fill around the halftone cutout, which read as a flat,
+           ungrained rectangle against the card's noisy grain/mottle texture.
+           mix-blend-mode:screen was tried here first, but it silently fails
+           whenever an ancestor gets isolated into its own stacking context
+           (e.g. Reveal's opacity-transition wrapper) — the blend then only
+           sees its own isolated (empty) backdrop instead of the real card
+           texture behind it, so the black reappears solid. Fixed at the
+           asset level instead: the PNG was reprocessed so near-black pixels
+           are genuinely transparent (alpha channel), which works regardless
+           of any ancestor's stacking context. */
         /* Soft fade at the bottom edge so the halftone crop dissolves into
            the card instead of ending on a hard, abrupt line. */
         WebkitMaskImage: 'linear-gradient(180deg, #000 82%, transparent 100%)',

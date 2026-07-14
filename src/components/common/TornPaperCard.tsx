@@ -1,20 +1,33 @@
-import type { ReactNode } from 'react';
-import { useRevealOnScroll } from './Reveal';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
-/* Draws itself in when scrolled into view. Earlier version used an SVG
-   `stroke-dasharray`/`stroke-dashoffset` line stretched via
-   `preserveAspectRatio="none"` — combined with `vector-effect:
-   non-scaling-stroke` that mixes CSS-pixel dash values with a non-uniformly
-   scaled viewBox coordinate space, which several browsers get wrong (the
-   dash pattern silently never resolves, so the line just never appears).
-   This version instead scales a plain div from 0 to full width
-   (`transform: scaleX`, `transform-origin: left`) — no SVG coordinate
-   spaces involved, so it can't misfire the same way — while keeping the
-   `deInk` filter on the div itself for the same hand-drawn wobble. */
+/* Draws itself in when scrolled into view, and un-draws again when scrolled
+   back past it (up or down) — unlike the rest of the site's one-shot
+   reveals, this one re-triggers both ways, so it plays again if you scroll
+   back to it. Earlier version used an SVG `stroke-dasharray`/
+   `stroke-dashoffset` line stretched via `preserveAspectRatio="none"` —
+   combined with `vector-effect:non-scaling-stroke` that mixes CSS-pixel
+   dash values with a non-uniformly scaled viewBox coordinate space, which
+   several browsers get wrong (the dash pattern silently never resolves, so
+   the line just never appears). This version instead scales a plain div
+   from 0 to full width (`transform: scaleX`, `transform-origin: left`) —
+   no SVG coordinate spaces involved, so it can't misfire the same way —
+   while keeping the `deInk` filter on the div itself for the same
+   hand-drawn wobble. */
 export const DrawLine = ({ color = 'rgba(230,200,172,0.55)', height = 3, style, className }: {
   color?: string; height?: number; style?: React.CSSProperties; className?: string;
 }) => {
-  const { ref, visible } = useRevealOnScroll<HTMLDivElement>(0.3);
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
     <div ref={ref} className={className} style={{ height, ...style }}>
       <div style={{
