@@ -1,5 +1,5 @@
-import anbu from '../../assets/images/Anbu.png';
-import aswin from '../../assets/images/Aswin.png';
+import anbu from '../../assets/images/Anbu 2.png';
+import aswin from '../../assets/images/Aswin 2.png';
 import kolam1 from '../../assets/images/Kolam 1.png';
 import kolam2 from '../../assets/images/Kolam 2.png';
 import { Reveal } from '../common/Reveal';

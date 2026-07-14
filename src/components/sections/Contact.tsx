@@ -107,6 +107,11 @@ export default function Contact() {
   return (
     <>
       <section id="contact" style={{ padding: `58px ${pad} 54px` }}>
+        {/* Shared maxWidth so the form block and the info+image row below
+            share one left edge and, once the section is wider than this,
+            center together as a single unit instead of the form clinging
+            to the left edge with a growing gap of empty space beside it. */}
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
         {/* Header + form come first (form moved up, no longer buried below
             the contact-info list) — the info list and the coffee
             illustration now pair up together underneath, side by side. */}
@@ -226,6 +231,7 @@ export default function Contact() {
             </div>
           </div>
         </Reveal>
+        </div>
 
         {/* Footer bar */}
         <div style={{ marginTop: 46, paddingTop: 30, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
