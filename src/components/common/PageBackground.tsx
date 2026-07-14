@@ -53,6 +53,16 @@ const right: Item[] = [
 
 const items = [...left, ...right];
 
+/* Reference gutter width the original sizes were designed against (the
+   old clamp's desktop ceiling). Converting each item's fixed px size into
+   a clamped `cqw` (container-query-width) value — measured against the
+   gutter's own actual rendered width, via `containerType:'inline-size'`
+   below — makes every letter/kolam scale down proportionally on narrow
+   screens instead of staying pinned at its full desktop size, which is
+   what made them read as oversized/clipped/invisible on mobile. */
+const REF_WIDTH = 260;
+const responsiveSize = (px: number) => `clamp(${(px * 0.42).toFixed(0)}px, ${(px / REF_WIDTH * 100).toFixed(1)}cqw, ${px}px)`;
+
 export default function PageBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [fontReady, setFontReady] = useState(false);
@@ -108,7 +118,17 @@ export default function PageBackground() {
       }}>
         {(['left', 'right'] as const).map(side => (
           <div key={side} className={`dn-bg-gutter dn-bg-gutter-${side}`} style={{
-            position: 'absolute', top: 0, [side]: 0, width: 'clamp(80px,15vw,260px)', height: '100%',
+            position: 'absolute', top: 0, [side]: 0,
+            /* Track the card's own centering formula (82vw, capped at
+               1140px, per TornPaperCard) instead of a fixed vw clamp — a
+               fixed clamp doesn't shrink at the same rate as the card's
+               actual cream margin, so on some widths the gutter undershot
+               the margin (leaving letters stranded in the low-contrast
+               cream zone) and on others it overshot into content. This
+               keeps the gutter's outer edge glued to the true margin width
+               at every breakpoint, plus a fixed overlap into the card. */
+            width: 'calc(max(9vw, (100vw - 1140px) / 2) + 44px)',
+            height: '100%', containerType: 'inline-size',
             fontFamily: F, color: TAN, textAlign: side === 'right' ? 'right' : 'left',
           }}>
             {items.filter(item => item.side === side).map((item, i) => {
@@ -127,7 +147,7 @@ export default function PageBackground() {
                     className="bg-letter"
                     style={{
                       ...pos,
-                      fontSize: item.size,
+                      fontSize: responsiveSize(item.size),
                       lineHeight: 1,
                       opacity: item.opacity,
                       userSelect: 'none',
@@ -152,7 +172,7 @@ export default function PageBackground() {
                       willChange: 'transform',
                     }}
                   >
-                    <img src={item.src} alt="" style={{ width: item.size, height: item.size, objectFit: 'contain', opacity: item.opacity, display: 'block' }} />
+                    <img src={item.src} alt="" style={{ width: responsiveSize(item.size), height: responsiveSize(item.size), objectFit: 'contain', opacity: item.opacity, display: 'block' }} />
                   </div>
                 );
               }
