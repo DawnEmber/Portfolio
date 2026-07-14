@@ -29,7 +29,9 @@ p { margin: 0; }
      proportion instead of an arbitrary fixed px that reads differently
      depending on how much copy sits beside it. */
   aspect-ratio: 4 / 5;
-  min-height: 300px;
+  min-height: 220px;
+  max-width: 340px;
+  margin: 0 auto;
 }
 .dn-person-grid.flip .dn-person-portrait { order: 0; }
 .dn-person-grid.flip .dn-person-details  { order: 1; }
@@ -66,9 +68,9 @@ p { margin: 0; }
 /* ─── Tablet (≥ 600px) ───────────────────────────────────────────────── */
 @media (min-width: 600px) {
   .dn-work-grid         { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .dn-person-grid       { grid-template-columns: 0.74fr 1.26fr; }
-  .dn-person-portrait   { aspect-ratio: 4 / 5; min-height: unset; }
-  .dn-person-grid.flip  { grid-template-columns: 1.26fr 0.74fr; }
+  .dn-person-grid       { grid-template-columns: 0.58fr 1.42fr; }
+  .dn-person-portrait   { aspect-ratio: 4 / 5; min-height: unset; max-width: none; margin: 0; }
+  .dn-person-grid.flip  { grid-template-columns: 1.42fr 0.58fr; }
   .dn-person-grid.flip .dn-person-portrait { order: 1; }
   .dn-person-grid.flip .dn-person-details  { order: 0; }
   .dn-contact-grid      { grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px,4cqw,52px); }

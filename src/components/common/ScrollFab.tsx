@@ -45,8 +45,8 @@ export default function ScrollFab() {
       aria-label={atBottom ? 'Back to top' : 'Get in touch'}
       onClick={onClick}
       style={{
-        position: 'fixed', right: 'clamp(56px,9vw,96px)', bottom: 'clamp(40px,6.5vw,68px)', zIndex: 50,
-        width: 108, height: 108, border: 'none', cursor: 'pointer', padding: 0, overflow: 'visible',
+        position: 'fixed', right: 'clamp(20px,9vw,96px)', bottom: 'clamp(20px,6.5vw,68px)', zIndex: 50,
+        width: 'clamp(64px,18vw,108px)', height: 'clamp(64px,18vw,108px)', border: 'none', cursor: 'pointer', padding: 0, overflow: 'visible',
         background: 'transparent', boxShadow: 'none',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.9)',

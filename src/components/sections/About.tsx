@@ -72,7 +72,7 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam,
         <div style={{ width: 34, height: 34, flex: '0 0 auto' }}>{indexMark}</div>
         <DrawLine color={orange} height={1.5} style={{ flex: 1 }} />
       </div>
-      <div style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: 44, lineHeight: 1, color: '#F8ECE0' }}>{name}</div>
+      <div style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: 44, lineHeight: 1, color: '#E6C8AC' }}>{name}</div>
       <div style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontSize: 20, color: orange, marginTop: 8 }}>{role}</div>
       <p style={{ fontSize: 15.5, lineHeight: 1.65, color: '#D4B99A', maxWidth: 340, margin: '16px 0 20px' }}>{tagline}</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
