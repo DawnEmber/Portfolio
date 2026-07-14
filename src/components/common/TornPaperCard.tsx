@@ -1,30 +1,28 @@
 import type { ReactNode } from 'react';
 import { useRevealOnScroll } from './Reveal';
 
-/* Draws itself in when scrolled into view — a real SVG stroke animated via
-   stroke-dashoffset (the "line completes on scroll" technique), rather than
-   a static gradient/color div, so every rule on the page reads as freshly
-   hand-drawn instead of simply appearing. Shared by every horizontal rule
-   on the site (section dividers, the hero CTA underline, the About index
-   rule, the Contact "let's talk" rule) so they all draw in consistently. */
+/* Draws itself in when scrolled into view. Earlier version used an SVG
+   `stroke-dasharray`/`stroke-dashoffset` line stretched via
+   `preserveAspectRatio="none"` — combined with `vector-effect:
+   non-scaling-stroke` that mixes CSS-pixel dash values with a non-uniformly
+   scaled viewBox coordinate space, which several browsers get wrong (the
+   dash pattern silently never resolves, so the line just never appears).
+   This version instead scales a plain div from 0 to full width
+   (`transform: scaleX`, `transform-origin: left`) — no SVG coordinate
+   spaces involved, so it can't misfire the same way — while keeping the
+   `deInk` filter on the div itself for the same hand-drawn wobble. */
 export const DrawLine = ({ color = 'rgba(230,200,172,0.55)', height = 3, style, className }: {
   color?: string; height?: number; style?: React.CSSProperties; className?: string;
 }) => {
-  const { ref, visible } = useRevealOnScroll<HTMLDivElement>(0.6);
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>(0.3);
   return (
     <div ref={ref} className={className} style={{ height, ...style }}>
-      <svg width="100%" height={height} viewBox={`0 0 200 ${height}`} preserveAspectRatio="none" style={{ display: 'block', overflow: 'visible' }}>
-        <line
-          x1="3" y1={height / 2} x2="197" y2={height / 2}
-          stroke={color} strokeWidth={height} strokeLinecap="round"
-          vectorEffect="non-scaling-stroke" filter="url(#deInk)"
-          style={{
-            strokeDasharray: 200,
-            strokeDashoffset: visible ? 0 : 200,
-            transition: 'stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1)',
-          }}
-        />
-      </svg>
+      <div style={{
+        height: '100%', borderRadius: height / 2, background: color,
+        filter: 'url(#deInk)', transformOrigin: 'left center',
+        transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+        transition: 'transform 1.1s cubic-bezier(.22,1,.36,1)',
+      }} />
     </div>
   );
 };
