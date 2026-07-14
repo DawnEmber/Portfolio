@@ -1,5 +1,7 @@
 import kolam1 from '../../assets/images/Kolam 1.png';
 import kolam2 from '../../assets/images/Kolam 2.png';
+import { Reveal } from '../common/Reveal';
+import { DrawLine } from '../common/TornPaperCard';
 
 const orange = '#AD4F2E';
 
@@ -34,7 +36,7 @@ const Plus = ({ top, right, bottom, left }: { top?: string; right?: string; bott
 
 export default function Hero() {
   return (
-    <section id="home" style={{ position: 'relative', overflow: 'hidden', padding: '34px clamp(28px,5cqw,60px) 74px' }}>
+    <section id="home" style={{ position: 'relative', overflow: 'hidden', padding: '10px clamp(28px,5cqw,60px) 74px' }}>
       {/* Watermark decoration */}
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 150, lineHeight: 1, color: '#F8ECE0', opacity: 0.05, top: '6%', left: '7%' }}>ழ</span>
@@ -58,8 +60,8 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-        <div style={{ fontWeight: 600, fontSize: 13, letterSpacing: '0.34em', color: orange, textTransform: 'uppercase', marginBottom: 28 }}>
+      <Reveal style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <div style={{ fontWeight: 600, fontSize: 'clamp(10px,2.6vw,13px)', letterSpacing: '0.28em', color: orange, textTransform: 'uppercase', marginBottom: 'clamp(14px,4vw,28px)' }}>
           Design&nbsp;&nbsp;•&nbsp;&nbsp;Develop&nbsp;&nbsp;•&nbsp;&nbsp;Deliver
         </div>
 
@@ -74,7 +76,7 @@ export default function Hero() {
           A design &amp; development studio from Coimbatore. We help ambitious brands and startups build meaningful digital experiences.
         </p>
 
-        <a href="#work" className="dn-hero-cta" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', padding: '18px 44px' }}>
+        <a href="#work" className="dn-hero-cta" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', padding: 'clamp(14px,3vw,18px) clamp(24px,6vw,44px)', whiteSpace: 'nowrap' }}>
           {/* Hand-drawn sketch outline — hidden by default, sketches in on hover.
               Transparent fill (not solid) + wobbly deRough border = pencil-sketch look. */}
           <span className="dn-hero-cta-bg" style={{
@@ -83,14 +85,24 @@ export default function Hero() {
             filter: 'url(#deRough)', opacity: 0, transform: 'scale(0.94)',
             transition: 'opacity .3s ease, transform .3s ease', pointerEvents: 'none',
           }} />
-          {/* Text block stays perfectly centred — arrow is an overlay, never part of the flex flow */}
+          {/* Text block stays perfectly centred — the diagonal hover arrow is
+              a separate absolute overlay, never part of this flex flow. */}
           <span style={{ position: 'relative', display: 'inline-flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
-            <span className="dn-hero-cta-label" style={{ fontWeight: 600, fontSize: 13, letterSpacing: '0.22em', color: '#F8ECE0', textTransform: 'uppercase' }}>Explore our work</span>
-            <span className="dn-hero-cta-underline" style={{ height: 3, width: '100%', borderRadius: 2, background: 'linear-gradient(90deg, rgba(173,79,46,0.95) 60%, rgba(173,79,46,0.35))', filter: 'url(#deInk)', transition: 'opacity .25s ease' }} />
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap' }}>
+              <span className="dn-hero-cta-label" style={{ fontWeight: 600, fontSize: 'clamp(11px,2.6vw,13px)', letterSpacing: '0.22em', color: '#F8ECE0', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Explore our work</span>
+              {/* Persistent down-chevron — a "there's more below" cue shown
+                  at every breakpoint, unlike the hover-only diagonal arrow.
+                  Run through the deInk displacement filter so it reads as a
+                  hand-drawn stroke like the underline and section rules. */}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F8ECE0" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <polyline points="5 9 12 16 19 9" filter="url(#deInk)" />
+              </svg>
+            </span>
+            <DrawLine className="dn-hero-cta-underline" color="rgba(173,79,46,0.95)" style={{ width: '100%', transition: 'opacity .25s ease' }} />
           </span>
-          <svg className="dn-hero-cta-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F8ECE0" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+          <svg className="dn-hero-cta-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F8ECE0" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
             style={{ position: 'absolute', right: 20, top: '50%', opacity: 0, transform: 'translate(-6px,-50%)', transition: 'opacity .3s ease, transform .3s ease' }}>
-            <line x1="7" y1="17" x2="17" y2="7" /><polyline points="8 7 17 7 17 16" />
+            <line x1="7" y1="17" x2="17" y2="7" filter="url(#deInk)" /><polyline points="8 7 17 7 17 16" filter="url(#deInk)" />
           </svg>
         </a>
         <style>{`
@@ -98,7 +110,7 @@ export default function Hero() {
           .dn-hero-cta:hover .dn-hero-cta-underline { opacity: 0; }
           .dn-hero-cta:hover .dn-hero-cta-arrow { opacity: 1; transform: translate(0,-50%); }
         `}</style>
-      </div>
+      </Reveal>
     </section>
   );
 }

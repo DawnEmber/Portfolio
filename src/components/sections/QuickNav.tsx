@@ -1,6 +1,7 @@
 import illAbout from '../../assets/images/Parrot Selected.png';
 import illWork from '../../assets/images/Laptop Selected.png';
 import illConnect from '../../assets/images/Filter Coffee Selected.png';
+import { Reveal } from '../common/Reveal';
 
 const navItems = [
   { href: '#about',   label: 'about',   ill: illAbout   },
@@ -29,7 +30,7 @@ const RoughUnderline = () => (
 
 export default function QuickNav() {
   return (
-    <div style={{ paddingBottom: 32 }}>
+    <div style={{ paddingBottom: 8 }}>
       <style>{`
         .dn-underline {
           opacity: 0;
@@ -67,10 +68,10 @@ export default function QuickNav() {
       `}</style>
 
       {/* Quick nav band inside the card */}
-      <div className="dn-nav-band" style={{ padding: '12px clamp(4px,3cqw,60px) 30px' }}>
+      <Reveal as="div" className="dn-nav-band" style={{ padding: '12px clamp(4px,3cqw,60px) 10px' }}>
         <div className="dn-nav-grid">
           {navItems.map(({ href, label, ill }) => (
-            <a key={label} href={href} className="dn-nav-item" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 4, textDecoration: 'none', padding: '16px 8px 20px' }}>
+            <a key={label} href={href} className="dn-nav-item" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 4, textDecoration: 'none', padding: '16px 8px 10px' }}>
               <span className="dn-nav-badge-wrap">
                 <img src={ill} alt="" className="dn-nav-badge" />
               </span>
@@ -81,7 +82,7 @@ export default function QuickNav() {
             </a>
           ))}
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 }

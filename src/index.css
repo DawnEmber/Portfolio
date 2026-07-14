@@ -24,16 +24,15 @@ p { margin: 0; }
   overflow: hidden;
 }
 .dn-person-portrait {
-  min-height: 340px;
+  /* aspect-ratio (not a bare min-height) ties the portrait's height to its
+     own column width, so both rows render at a consistent, intentional
+     proportion instead of an arbitrary fixed px that reads differently
+     depending on how much copy sits beside it. */
+  aspect-ratio: 4 / 5;
+  min-height: 300px;
 }
 .dn-person-grid.flip .dn-person-portrait { order: 0; }
 .dn-person-grid.flip .dn-person-details  { order: 1; }
-
-.dn-spark-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
 
 .dn-contact-grid {
   display: grid;
@@ -44,26 +43,36 @@ p { margin: 0; }
 .dn-contact-image { order: -1; max-height: 260px; overflow: hidden; }
 
 .dn-contact-inner-grid { grid-template-columns: 1fr; }
-.dn-contact-divider { display: none; }
+.dn-contact-divider { display: none !important; }
 
 /* ─── Mobile nav tightening ─────────────────────────────────────────── */
 @media (max-width: 599px) {
   .dn-nav-band { padding-left: 2px !important; padding-right: 2px !important; }
   .dn-nav-item { padding: 10px 2px 12px !important; gap: 2px !important; }
   .dn-nav-label { font-size: 18px !important; margin-top: 2px !important; }
+
+  /* The background gutters' letters/kolams are sized in fixed px tuned for
+     desktop, so on a narrow phone screen they read as oversized and mostly
+     spill into the (invisible, tan-on-cream) margin. Scaling the whole
+     gutter down and re-anchoring the transform origin to the screen edge
+     shrinks everything uniformly while keeping it pinned to that edge, so
+     mobile gets the same scattered-motif density desktop has instead of a
+     few giant, mostly-hidden glyphs. */
+  .dn-bg-gutter { transform: scale(0.62); }
+  .dn-bg-gutter-left { transform-origin: left top; }
+  .dn-bg-gutter-right { transform-origin: right top; }
 }
 
 /* ─── Tablet (≥ 600px) ───────────────────────────────────────────────── */
 @media (min-width: 600px) {
   .dn-work-grid         { grid-template-columns: 1fr 1fr; gap: 32px; }
   .dn-person-grid       { grid-template-columns: 0.74fr 1.26fr; }
-  .dn-person-portrait   { min-height: 440px; }
+  .dn-person-portrait   { aspect-ratio: 4 / 5; min-height: unset; }
   .dn-person-grid.flip  { grid-template-columns: 1.26fr 0.74fr; }
   .dn-person-grid.flip .dn-person-portrait { order: 1; }
   .dn-person-grid.flip .dn-person-details  { order: 0; }
-  .dn-spark-grid        { grid-template-columns: repeat(5, 1fr); gap: 16px; }
   .dn-contact-grid      { grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px,4cqw,52px); }
   .dn-contact-image     { order: 0; max-height: none; }
   .dn-contact-inner-grid { grid-template-columns: 0.82fr 32px 1.1fr; align-items: stretch; }
-  .dn-contact-divider { display: block; }
+  .dn-contact-divider { display: flex !important; flex-direction: column; align-items: center; }
 }

@@ -2,6 +2,8 @@ import anbu from '../../assets/images/Anbu.png';
 import aswin from '../../assets/images/Aswin.png';
 import kolam1 from '../../assets/images/Kolam 1.png';
 import kolam2 from '../../assets/images/Kolam 2.png';
+import { Reveal } from '../common/Reveal';
+import { DrawLine } from '../common/TornPaperCard';
 
 const orange = '#AD4F2E';
 const pad = 'clamp(28px,5cqw,60px)';
@@ -53,6 +55,10 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam,
       <img src={img} alt={name} style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%',
         objectFit: 'cover', objectPosition: imgPos,
+        /* Soft fade at the bottom edge so the halftone crop dissolves into
+           the card instead of ending on a hard, abrupt line. */
+        WebkitMaskImage: 'linear-gradient(180deg, #000 82%, transparent 100%)',
+        maskImage: 'linear-gradient(180deg, #000 82%, transparent 100%)',
       }} />
       <div style={{ position: 'absolute', right: 18, bottom: 20, opacity: 0.88 }}>{kolam}</div>
     </div>
@@ -60,12 +66,15 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam,
 
   const details = (
     <div key="details" style={{ padding: '36px clamp(24px,4cqw,42px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-        {indexMark}
+      {/* Index mark paired with a rule, anchoring it to the name the same
+          way the numbered accents read elsewhere on the site (Work, etc.) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}>
+        <div style={{ width: 34, height: 34, flex: '0 0 auto' }}>{indexMark}</div>
+        <DrawLine color={orange} height={1.5} style={{ flex: 1 }} />
       </div>
       <div style={{ fontFamily: "'Newsreader',serif", fontWeight: 500, fontSize: 44, lineHeight: 1, color: '#F8ECE0' }}>{name}</div>
       <div style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontSize: 20, color: orange, marginTop: 8 }}>{role}</div>
-      <p style={{ fontSize: 15.5, lineHeight: 1.65, color: '#D4B99A', maxWidth: 340, margin: '18px 0 22px' }}>{tagline}</p>
+      <p style={{ fontSize: 15.5, lineHeight: 1.65, color: '#D4B99A', maxWidth: 340, margin: '16px 0 20px' }}>{tagline}</p>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {skills.map(s => <Chip key={s} label={s} />)}
       </div>
@@ -84,7 +93,7 @@ function PersonRow({ indexMark, img, imgPos, name, role, tagline, skills, kolam,
 export default function About() {
   return (
     <section id="about" style={{ padding: `44px ${pad} 48px` }}>
-      <div style={{ textAlign: 'center', marginBottom: 34 }}>
+      <Reveal style={{ textAlign: 'center', marginBottom: 34 }}>
         <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>About us</div>
         <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 34, color: '#F8ECE0', margin: '14px 0 0', letterSpacing: '-0.01em' }}>
           The minds behind dawnember.
@@ -92,25 +101,29 @@ export default function About() {
         <p style={{ fontSize: 15.5, color: '#C4A882', maxWidth: 440, margin: '14px auto 0', lineHeight: 1.65 }}>
           A two-person team blending design and development to create fun, functional, and user-friendly digital experiences.
         </p>
-      </div>
+      </Reveal>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(20px,3cqw,30px)' }}>
-        <PersonRow
-          indexMark={kolamIndexOne} img={anbu} imgPos="50% 16%"
-          name="Anbu" role="Designer"
-          tagline="Crafting pixel-perfect designs that tell stories and evoke emotion. From concept to completion, every detail matters."
-          skills={['Figma', 'Framer', 'Web Design', 'UI/UX Design']}
-          kolam={kolamOrange(104)}
-          flip={false}
-        />
-        <PersonRow
-          indexMark={kolamIndexTwo} img={aswin} imgPos="50% 18%"
-          name="Aswin" role="Full Stack Developer"
-          tagline="Building robust, scalable solutions that bring designs to life. Clean code, seamless functionality, and optimized performance."
-          skills={['React', 'Node JS', 'Express JS', 'Mongo DB']}
-          kolam={<img src={kolam2} alt="" style={{ width: 108, height: 108, objectFit: 'contain', opacity: 0.5, filter: 'sepia(1) saturate(3) hue-rotate(-15deg) brightness(0.75)', display: 'block' }} />}
-          flip={true}
-        />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(28px,4cqw,44px)' }}>
+        <Reveal>
+          <PersonRow
+            indexMark={kolamIndexOne} img={anbu} imgPos="50% 16%"
+            name="Anbu" role="Designer"
+            tagline="Crafting pixel-perfect designs that tell stories and evoke emotion. From concept to completion, every detail matters."
+            skills={['Figma', 'Framer', 'Web Design', 'UI/UX Design']}
+            kolam={kolamOrange(104)}
+            flip={false}
+          />
+        </Reveal>
+        <Reveal>
+          <PersonRow
+            indexMark={kolamIndexTwo} img={aswin} imgPos="50% 18%"
+            name="Aswin" role="Full Stack Developer"
+            tagline="Building robust, scalable solutions that bring designs to life. Clean code, seamless functionality, and optimized performance."
+            skills={['React', 'Node JS', 'Express JS', 'Mongo DB']}
+            kolam={<img src={kolam2} alt="" style={{ width: 108, height: 108, objectFit: 'contain', opacity: 0.5, filter: 'sepia(1) saturate(3) hue-rotate(-15deg) brightness(0.75)', display: 'block' }} />}
+            flip={true}
+          />
+        </Reveal>
       </div>
     </section>
   );

@@ -1,12 +1,36 @@
 import type { ReactNode } from 'react';
+import { useRevealOnScroll } from './Reveal';
+
+/* Draws itself in when scrolled into view — a real SVG stroke animated via
+   stroke-dashoffset (the "line completes on scroll" technique), rather than
+   a static gradient/color div, so every rule on the page reads as freshly
+   hand-drawn instead of simply appearing. Shared by every horizontal rule
+   on the site (section dividers, the hero CTA underline, the About index
+   rule, the Contact "let's talk" rule) so they all draw in consistently. */
+export const DrawLine = ({ color = 'rgba(230,200,172,0.55)', height = 3, style, className }: {
+  color?: string; height?: number; style?: React.CSSProperties; className?: string;
+}) => {
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>(0.6);
+  return (
+    <div ref={ref} className={className} style={{ height, ...style }}>
+      <svg width="100%" height={height} viewBox={`0 0 200 ${height}`} preserveAspectRatio="none" style={{ display: 'block', overflow: 'visible' }}>
+        <line
+          x1="3" y1={height / 2} x2="197" y2={height / 2}
+          stroke={color} strokeWidth={height} strokeLinecap="round"
+          vectorEffect="non-scaling-stroke" filter="url(#deInk)"
+          style={{
+            strokeDasharray: 200,
+            strokeDashoffset: visible ? 0 : 200,
+            transition: 'stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1)',
+          }}
+        />
+      </svg>
+    </div>
+  );
+};
 
 export const InkDivider = ({ style }: { style?: React.CSSProperties }) => (
-  <div style={{
-    height: 3, borderRadius: 2,
-    background: 'linear-gradient(90deg,transparent,rgba(230,200,172,0.55) 7%,rgba(230,200,172,0.5) 50%,rgba(230,200,172,0.55) 93%,transparent)',
-    filter: 'url(#deInk)',
-    ...style,
-  }} />
+  <DrawLine style={style} />
 );
 
 export const InkDividerV = ({ style }: { style?: React.CSSProperties }) => (
@@ -35,9 +59,22 @@ const C = '#F8ECE0';
    (same colour as background). Zero gray, zero bleed. */
 
 const OVERLAP = 75; // px the cream rect overlaps into the card
+/* Cross-axis inset for each torn strip — generous overlap at all four
+   corners (rather than a thin -4px) so the top/bottom and left/right
+   overlays always cover each other's corner regardless of viewport width. */
+const CORNER = 100;
+/* Belt-and-suspenders: fade each strip to transparent at its own cross-axis
+   ends (via CSS mask, applied on top of the deTorn-displaced pixels) so a
+   corner can never show a hard rectangular edge — only ever a soft taper —
+   no matter how the turbulence displacement happens to land at that width. */
+const fadeH = 'linear-gradient(90deg, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%)';
+const fadeV = 'linear-gradient(180deg, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%)';
 
 const TornTop = () => (
-  <div aria-hidden style={{ position:'absolute', top: -(OVERLAP), left:-4, right:-4, height: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible' }}>
+  <div aria-hidden style={{
+    position:'absolute', top: -(OVERLAP), left:-CORNER, right:-CORNER, height: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible',
+    WebkitMaskImage: fadeH, maskImage: fadeH,
+  }}>
     <svg width="100%" height={OVERLAP + 30} style={{ display:'block', overflow:'visible' }}>
       <rect x="0" y="0" width="100%" height={OVERLAP} fill={C} filter="url(#deTorn)" />
     </svg>
@@ -45,7 +82,10 @@ const TornTop = () => (
 );
 
 const TornBottom = () => (
-  <div aria-hidden style={{ position:'absolute', bottom: -(OVERLAP), left:-4, right:-4, height: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible' }}>
+  <div aria-hidden style={{
+    position:'absolute', bottom: -(OVERLAP), left:-CORNER, right:-CORNER, height: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible',
+    WebkitMaskImage: fadeH, maskImage: fadeH,
+  }}>
     <svg width="100%" height={OVERLAP + 30} style={{ display:'block', overflow:'visible' }}>
       <rect x="0" y="30" width="100%" height={OVERLAP} fill={C} filter="url(#deTorn)" />
     </svg>
@@ -53,7 +93,10 @@ const TornBottom = () => (
 );
 
 const TornLeft = () => (
-  <div aria-hidden style={{ position:'absolute', top:-4, bottom:-4, left: -(OVERLAP), width: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible' }}>
+  <div aria-hidden style={{
+    position:'absolute', top:-CORNER, bottom:-CORNER, left: -(OVERLAP), width: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible',
+    WebkitMaskImage: fadeV, maskImage: fadeV,
+  }}>
     <svg width={OVERLAP + 30} height="100%" style={{ display:'block', overflow:'visible' }}>
       <rect x="0" y="0" width={OVERLAP} height="100%" fill={C} filter="url(#deTorn)" />
     </svg>
@@ -61,7 +104,10 @@ const TornLeft = () => (
 );
 
 const TornRight = () => (
-  <div aria-hidden style={{ position:'absolute', top:-4, bottom:-4, right: -(OVERLAP), width: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible' }}>
+  <div aria-hidden style={{
+    position:'absolute', top:-CORNER, bottom:-CORNER, right: -(OVERLAP), width: OVERLAP + 30, pointerEvents:'none', zIndex:10, overflow:'visible',
+    WebkitMaskImage: fadeV, maskImage: fadeV,
+  }}>
     <svg width={OVERLAP + 30} height="100%" style={{ display:'block', overflow:'visible' }}>
       <rect x="30" y="0" width={OVERLAP} height="100%" fill={C} filter="url(#deTorn)" />
     </svg>
@@ -76,7 +122,7 @@ export default function TornPaperCard({ children }: { children: ReactNode }) {
       {/* Inner: overflow:clip clips grain/mottle — torn overlays are siblings
           outside. Must be `clip`, NOT `hidden`: `hidden` would make this a
           scroll container and silently break `position: sticky` in the
-          sections below (e.g. SparkFactor's pinned scroll scene). */}
+          sections below (SparkFactor's pinned horizontal scrollytelling). */}
       <div style={{ position: 'relative', overflow: 'clip', containerType: 'inline-size' }}>
         <div style={{ position: 'absolute', inset: 0, background: '#0a0a0a' }} />
         <div style={{ position: 'absolute', inset: 0, filter: 'url(#deGrain)', opacity: 0.44, mixBlendMode: 'screen', pointerEvents: 'none' }} />

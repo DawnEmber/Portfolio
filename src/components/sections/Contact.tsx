@@ -1,17 +1,45 @@
 import { useState } from 'react';
-import { InkDivider } from '../common/TornPaperCard';
+import { InkDivider, DrawLine } from '../common/TornPaperCard';
+import { Reveal } from '../common/Reveal';
 import coffeeImg from '../../assets/images/coffe 1.png';
 import favicon2 from '../../assets/images/Favicon 2.svg';
 
 const orange = '#AD4F2E';
 const pad = 'clamp(28px,5cqw,60px)';
 
+/* Steam — three soft motes rising from the cup's actual mouth (the
+   illustration's own painted-in curl starts there), continuing that curl
+   upward and forward along a real `offset-path` instead of restarting
+   somewhere disconnected from the artwork. Growing/blurring as they thin
+   out reads as one continuous drift rather than a repeating mechanical
+   loop; each dot has its own curvature, duration and delay so the three
+   never move in visible sync. */
+const SteamRising = () => (
+  <div style={{ position: 'absolute', left: '63%', top: '50%', width: 1, height: 1, pointerEvents: 'none' }}>
+    <style>{`
+      @keyframes dnDrift {
+        0%   { offset-distance: 0%; opacity: 0; transform: scale(0.45); filter: blur(0px); }
+        16%  { opacity: 0.55; }
+        62%  { opacity: 0.3; }
+        100% { offset-distance: 100%; opacity: 0; transform: scale(2); filter: blur(2.6px); }
+      }
+      .dn-wisp {
+        position: absolute; top: 0; left: 0; width: 5px; height: 5px; border-radius: 50%;
+        background: #F8ECE0; animation-name: dnDrift; animation-timing-function: ease-in-out; animation-iteration-count: infinite;
+      }
+    `}</style>
+    <div className="dn-wisp" style={{ offsetPath: "path('M0,0 C -3,-18 4,-34 -1,-52 C -5,-70 3,-84 -2,-102')", animationDuration: '5.2s', animationDelay: '0s' }} />
+    <div className="dn-wisp" style={{ offsetPath: "path('M0,0 C 4,-16 -3,-32 3,-50 C 7,-68 -2,-82 4,-98')", animationDuration: '6s', animationDelay: '1.8s' }} />
+    <div className="dn-wisp" style={{ offsetPath: "path('M0,0 C -2,-14 5,-30 -3,-48 C -7,-64 2,-78 -3,-94')", animationDuration: '4.6s', animationDelay: '3.2s' }} />
+  </div>
+);
+
 /* Hand-drawn ornamental vertical divider — SVG instead of the raster PNG,
    which had blurred glow margins that got cropped/cut off at odd points.
    Lines flex to fill whatever height the row needs; the knot ornament in
    the middle stays fixed size, so it always fits perfectly, never crops. */
 const OrnamentalDivider = () => (
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', width: 40, opacity: 0.4 }}>
+  <div className="dn-contact-divider" style={{ height: '100%', width: 40, opacity: 0.4 }}>
     {/* Short lead-in so the flourish sits near the top, not centered */}
     <div style={{ flex: '0 0 20px', width: 1.5, background: 'linear-gradient(180deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
     {/* Single simple loop-knot, fully vector so it never blurs, crops,
@@ -93,7 +121,7 @@ export default function Contact() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email}, ${form.phone})`);
+    const body = encodeURIComponent(`${form.message}\n\nFrom, ${form.name} (${form.email}, ${form.phone})`);
     window.location.href = `mailto:hello@dawnember.in?subject=${encodeURIComponent(`Message from ${form.name || 'website'}`)}&body=${body}`;
   };
 
@@ -102,13 +130,13 @@ export default function Contact() {
       <section id="contact" style={{ padding: `58px ${pad} 54px` }}>
         <div className="dn-contact-grid">
           {/* Left */}
-          <div>
+          <Reveal>
             <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
             <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
               Let's talk{' '}
               <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>over a filter.</em>
             </h2>
-            <div style={{ width: 60, height: 3, borderRadius: 2, background: orange, margin: '18px 0 22px', filter: 'url(#deInk)' }} />
+            <DrawLine color={orange} style={{ width: 60, margin: '18px 0 22px' }} />
             <p style={{ fontSize: 15.5, color: '#F8ECE0', maxWidth: 420, margin: '0 0 34px', lineHeight: 1.6 }}>
               Have a project in mind or just want to say hi?<br />
               Drop us a message. We'd love to hear from you.
@@ -202,19 +230,25 @@ export default function Contact() {
                     filter: 'url(#deRough)', pointerEvents: 'none',
                   }} />
                   Send message
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  {/* Same hand-drawn deInk stroke used for the hero CTA's
+                      down-chevron, so every arrow on the site reads sketched
+                      rather than a clean vector line. */}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" filter="url(#deInk)" /><polyline points="12 5 19 12 12 19" filter="url(#deInk)" />
                   </svg>
                 </button>
               </form>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right — coffee art */}
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Reveal delay={0.12} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-            <img src={coffeeImg} alt="Filter coffee by the window" style={{ position: 'relative', width: '100%', maxWidth: 470, height: 'auto', display: 'block' }} />
-          </div>
+            <div style={{ position: 'relative', width: '100%', maxWidth: 470 }}>
+              <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <SteamRising />
+            </div>
+          </Reveal>
         </div>
 
         {/* Footer bar */}
