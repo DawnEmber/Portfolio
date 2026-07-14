@@ -25,7 +25,7 @@ type Item = {
    clear of each other even at the slightly larger size. */
 const left: Item[] = [
   { type: 'letter', char: 'ழ', size: 120, opacity: 0.32, top: '3%', left: '14%', depth: 0.10, side: 'left' },
-  { type: 'letter', char: 'ம', size: 34, opacity: 0.42, top: '11%', left: '58%', depth: -0.12, side: 'left' },
+  { type: 'letter', char: 'ஃ', size: 34, opacity: 0.42, top: '11%', left: '58%', depth: -0.12, side: 'left' },
   { type: 'kolam', src: kolamTan, size: 56, opacity: 0.45, top: '19%', left: '8%', depth: 0.22, side: 'left' },
   { type: 'kolam', src: kolamOrange, size: 76, opacity: 0.5, top: '31%', left: '46%', depth: 0.26, side: 'left' },
   { type: 'letter', char: 'க', size: 46, opacity: 0.4, top: '42%', left: '50%', depth: -0.16, side: 'left' },
@@ -42,7 +42,7 @@ const right: Item[] = [
   { type: 'kolam', src: kolamTan, size: 52, opacity: 0.42, top: '12%', right: '8%', depth: 0.18, side: 'right' },
   { type: 'kolam', src: kolamOrange, size: 72, opacity: 0.45, top: '25%', right: '46%', depth: 0.16, side: 'right' },
   { type: 'letter', char: 'ய', size: 42, opacity: 0.42, top: '36%', right: '48%', depth: -0.26, side: 'right' },
-  { type: 'letter', char: 'ம', size: 100, opacity: 0.28, top: '46%', right: '20%', depth: 0.12, side: 'right' },
+  { type: 'letter', char: 'ஃ', size: 100, opacity: 0.28, top: '46%', right: '20%', depth: 0.12, side: 'right' },
   { type: 'kolam', src: kolamOrange, size: 60, opacity: 0.4, top: '58%', right: '10%', depth: 0.24, side: 'right' },
   { type: 'kolam', src: kolamOrange, size: 66, opacity: 0.45, top: '68%', right: '44%', depth: 0.28, side: 'right' },
   { type: 'letter', char: 'ண', size: 42, opacity: 0.4, top: '80%', right: '46%', depth: -0.14, side: 'right' },

@@ -41,7 +41,7 @@ export default function Hero() {
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 150, lineHeight: 1, color: '#F8ECE0', opacity: 0.05, top: '6%', left: '7%' }}>ழ</span>
         <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 140, lineHeight: 1, color: '#F8ECE0', opacity: 0.05, bottom: '4%', right: '9%' }}>அ</span>
-        <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 96, lineHeight: 1, color: '#F8ECE0', opacity: 0.04, top: '30%', right: '6%' }}>ம</span>
+        <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 96, lineHeight: 1, color: '#F8ECE0', opacity: 0.04, top: '30%', right: '6%' }}>ஃ</span>
         <span style={{ position: 'absolute', fontFamily: "'Noto Sans Tamil',serif", fontSize: 92, lineHeight: 1, color: '#F8ECE0', opacity: 0.04, bottom: '8%', left: '11%' }}>இ</span>
         <DotGrid top="14%" right="17%" color="rgba(242,235,222,0.16)" cols={7} rows={5} gap={13} />
         <DotGrid bottom="18%" left="15%" color="rgba(173,79,46,0.3)" cols={6} rows={4} gap={13} />
