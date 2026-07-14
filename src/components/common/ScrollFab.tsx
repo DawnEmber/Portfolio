@@ -45,8 +45,14 @@ export default function ScrollFab() {
       aria-label={atBottom ? 'Back to top' : 'Get in touch'}
       onClick={onClick}
       style={{
-        position: 'fixed', right: 'clamp(20px,9vw,96px)', bottom: 'clamp(20px,6.5vw,68px)', zIndex: 50,
-        width: 'clamp(64px,18vw,108px)', height: 'clamp(64px,18vw,108px)', border: 'none', cursor: 'pointer', padding: 0, overflow: 'visible',
+        /* Anchored with small FIXED offsets (not vw-scaled) so it always
+           floats in the true screen corner regardless of the card's own
+           width (82vw, capped at 1140px) — a vw-based offset tracked
+           somewhere between the screen edge and the card edge, which on
+           mid-size viewports landed deep enough inside the card to overlap
+           its content/torn corner instead of sitting cleanly outside it. */
+        position: 'fixed', right: 'clamp(14px,4vw,64px)', bottom: 'clamp(14px,3vw,48px)', zIndex: 50,
+        width: 'clamp(52px,15vw,108px)', height: 'clamp(52px,15vw,108px)', border: 'none', cursor: 'pointer', padding: 0, overflow: 'visible',
         background: 'transparent', boxShadow: 'none',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.9)',
@@ -54,13 +60,18 @@ export default function ScrollFab() {
         transition: 'opacity .3s ease, transform .3s ease',
       }}
     >
+      {/* Soft shadow beneath the badge so it visually lifts off whatever
+          it's floating over (card corner, torn edge, cream margin) instead
+          of reading as if it's clipping into it. */}
       <img src={filterCoffeeSelected} alt="" style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain',
+        filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.45))',
         opacity: atBottom ? 0 : 1, transform: atBottom ? 'scale(0.7) rotate(-15deg)' : 'scale(1) rotate(0deg)',
         transition: 'opacity .3s ease, transform .3s ease',
       }} />
       <img src={parrotSelected} alt="" style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain',
+        filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.45))',
         opacity: atBottom ? 1 : 0, transform: atBottom ? 'scale(1) rotate(0deg)' : 'scale(0.7) rotate(15deg)',
         transition: 'opacity .3s ease, transform .3s ease',
       }} />
