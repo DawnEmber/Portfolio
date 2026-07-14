@@ -220,11 +220,13 @@ export default function Contact() {
           </div>
         </Reveal>
 
-        {/* Coffee art */}
-        <Reveal delay={0.18} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image' }}>
+        {/* Coffee art — fills the full height of its row/column (matches
+            the height of the form beside it) instead of being sized by its
+            own width and leaving empty space below. */}
+        <Reveal delay={0.18} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image', height: '100%', minHeight: 320 }}>
           <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', width: '100%', maxWidth: 420 }}>
-            <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             <SteamRising />
           </div>
         </Reveal>
