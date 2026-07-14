@@ -36,24 +36,22 @@ p { margin: 0; }
 .dn-person-grid.flip .dn-person-portrait { order: 0; }
 .dn-person-grid.flip .dn-person-details  { order: 1; }
 
-/* Contact section: three named grid areas (header+form, info, image)
-   rearranged per breakpoint — same DOM, no duplication. Mobile stacks all
-   three; tablet keeps header+form on top with info/image paired below;
-   desktop reverts to the original side-by-side layout, with header+form+
-   info stacked in one column and the image spanning the full height
-   beside it. */
+/* Contact section: five named grid areas (headerpara, info, divider, form,
+   image) rearranged per breakpoint from one flat, unnested DOM — this is
+   what lets mobile/desktop stay pixel-faithful to the original design
+   while only the tablet range gets the reflowed layout.
+   Mobile (default here): coffee art on top (matches the original design's
+   `order:-1` image-first behavior), then header copy, info, and form
+   stacked below; no divider (info/form are never side by side here). */
 .dn-contact-layout {
   display: grid;
   gap: 30px;
   grid-template-columns: 1fr;
-  grid-template-areas: "headerform" "info" "image";
-  /* Centers the block once the section is wider than this — only "when
-     necessary" (mobile/tablet, where content doesn't fill the section) —
-     desktop's two-column layout below overrides this back to full width,
-     since there it deliberately uses the whole card width. */
-  max-width: 900px;
+  grid-template-areas: "image" "headerpara" "info" "form";
+  max-width: 640px;
   margin: 0 auto;
 }
+.dn-contact-divider { display: none; }
 
 /* ─── Mobile nav tightening ─────────────────────────────────────────── */
 @media (max-width: 599px) {
@@ -83,24 +81,32 @@ p { margin: 0; }
   .dn-person-grid.flip .dn-person-details  { order: 0; }
 }
 
-/* Tablet: header+form stays full width on top; info list pairs up with
-   the coffee illustration side by side underneath. */
+/* Tablet only: header copy and the form stay together, full width, on
+   top; the info list pairs up with the coffee illustration side by side
+   underneath. This is the one range that differs from the original
+   design — it exists specifically to fix the cramped tablet-width layout
+   (info + divider + form + image all fighting for space at once), without
+   touching mobile or desktop. */
 @media (min-width: 560px) and (max-width: 899px) {
   .dn-contact-layout {
+    max-width: 900px;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "headerform headerform" "info image";
+    grid-template-areas: "headerpara headerpara" "form form" "info image";
   }
 }
 
-/* Desktop: header+form, info, and image all sit in a single row, three
-   columns wide. align-items:stretch (the default) so the image column
-   fills the full row height instead of sizing to its own content and
-   leaving empty space below. */
+/* Desktop (≥900px): the original side-by-side layout — header copy spans
+   the top of a three-column text block (info | divider | form), with the
+   coffee art spanning the full height beside it. */
 @media (min-width: 900px) {
   .dn-contact-layout {
     max-width: none;
-    grid-template-columns: 1.15fr 0.7fr 0.85fr;
-    gap: clamp(24px,3cqw,44px);
-    grid-template-areas: "headerform info image";
+    margin: 0;
+    gap: clamp(20px,3cqw,32px);
+    grid-template-columns: 0.78fr 30px 1fr 0.98fr;
+    grid-template-areas:
+      "headerpara headerpara headerpara image"
+      "info       divider    form      image";
   }
+  .dn-contact-divider { display: flex; flex-direction: column; align-items: center; }
 }

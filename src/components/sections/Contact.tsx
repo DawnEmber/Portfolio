@@ -34,6 +34,30 @@ const SteamRising = () => (
   </div>
 );
 
+/* Hand-drawn ornamental vertical divider — SVG instead of the raster PNG,
+   which had blurred glow margins that got cropped/cut off at odd points.
+   Lines flex to fill whatever height the row needs; the knot ornament in
+   the middle stays fixed size, so it always fits perfectly, never crops.
+   Only shown at desktop, where info/form sit side by side in the same
+   row — at mobile/tablet widths they're never adjacent, so the divider
+   wouldn't make sense there. */
+const OrnamentalDivider = () => (
+  <div className="dn-contact-divider" style={{ height: '100%', width: 40, opacity: 0.4, gridArea: 'divider' }}>
+    {/* Short lead-in so the flourish sits near the top, not centered */}
+    <div style={{ flex: '0 0 20px', width: 1.5, background: 'linear-gradient(180deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
+    {/* Single simple loop-knot, fully vector so it never blurs, crops,
+        or misaligns at any height. */}
+    <svg width="26" height="30" viewBox="0 0 26 30" style={{ flex: '0 0 auto' }}>
+      <path
+        d="M13 0 V11 C8 6 3 8 3 12 C3 16.5 9 16 13 11 C17 16 23 16.5 23 12 C23 8 18 6 13 11 V30"
+        fill="none" stroke="#E6C8AC" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"
+        filter="url(#deRough)"
+      />
+    </svg>
+    <div style={{ flex: 1, minHeight: 12, width: 1.5, background: 'linear-gradient(0deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
+  </div>
+);
+
 const icons = {
   mail: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8ECE0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -107,27 +131,75 @@ export default function Contact() {
   return (
     <>
       <section id="contact" style={{ padding: `58px ${pad} 54px` }}>
-        {/* Named grid areas so the same four blocks (header+form, info,
-            image) can be rearranged per breakpoint via CSS alone, no DOM
-            duplication: mobile stacks all three; tablet keeps header+form
-            on top with info/image paired below it; desktop reverts to the
-            original side-by-side layout (header+form+info stacked in one
-            column, image spanning the full height beside it). */}
+        {/* Five named grid areas (headerpara, info, divider, form, image)
+            so the exact same DOM/flat structure can be rearranged per
+            breakpoint via CSS alone: mobile puts the coffee art on top
+            (matching the original design), then header copy, info, and
+            form stacked below; tablet keeps header+form together on top
+            with info/image paired below (fixes the cramped tablet-width
+            layout without touching mobile or desktop); desktop restores
+            the original side-by-side layout — header spanning the top of
+            a 3-column text block (info | divider | form), image spanning
+            the full height beside it. */}
         <div className="dn-contact-layout">
-        <Reveal style={{ maxWidth: 640, gridArea: 'headerform' }}>
-          <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
-          <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
-            Let's talk{' '}
-            <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>over a filter.</em>
-          </h2>
-          <DrawLine color={orange} style={{ width: 60, margin: '18px 0 22px' }} />
-          <p style={{ fontSize: 15.5, color: '#F8ECE0', maxWidth: 420, margin: '0 0 34px', lineHeight: 1.6 }}>
-            Have a project in mind or just want to say hi?<br />
-            Drop us a message. We'd love to hear from you.
-          </p>
+          <Reveal style={{ gridArea: 'headerpara' }}>
+            <div style={{ fontWeight: 700, fontSize: 12, letterSpacing: '0.26em', color: orange, textTransform: 'uppercase' }}>Let's brew something great,</div>
+            <h2 style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(32px,3.5vw,42px)', lineHeight: 1.06, color: '#F8ECE0', margin: '16px 0 0', letterSpacing: '-0.02em' }}>
+              Let's talk{' '}
+              <em style={{ fontFamily: "'Newsreader',serif", fontStyle: 'italic', fontWeight: 500, color: orange }}>over a filter.</em>
+            </h2>
+            <DrawLine color={orange} style={{ width: 60, margin: '18px 0 22px' }} />
+            <p style={{ fontSize: 15.5, color: '#F8ECE0', maxWidth: 420, margin: 0, lineHeight: 1.6 }}>
+              Have a project in mind or just want to say hi?<br />
+              Drop us a message. We'd love to hear from you.
+            </p>
+          </Reveal>
+
+          {/* Contact info list */}
+          <Reveal delay={0.08} style={{ position: 'relative', paddingLeft: 4, gridArea: 'info', alignSelf: 'start' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
+              {infoItems.map(({ icon, label, lines }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+                  <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+                    {icon}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
+                    {lines.map(l => (
+                      <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Social */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+                <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
+                  {icons.social}
+                </div>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    {socialLinks.map(({ name, href, icon }) => (
+                      <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        width: 32, height: 32, borderRadius: '50%',
+                        border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
+                      }}>
+                        {icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Ornamental vertical divider — desktop only */}
+          <OrnamentalDivider />
 
           {/* Form — every field gets a hand-drawn wobbly border */}
-          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 460 }}>
+          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16, gridArea: 'form' }}>
             <RoughField>
               <input
                 type="text" placeholder="Your name" required
@@ -178,58 +250,15 @@ export default function Contact() {
               </svg>
             </button>
           </form>
-        </Reveal>
 
-        {/* Contact info list */}
-        <Reveal delay={0.12} style={{ position: 'relative', paddingLeft: 4, gridArea: 'info', alignSelf: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
-            {infoItems.map(({ icon, label, lines }) => (
-              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-                <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
-                  {icon}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0' }}>{label}</div>
-                  {lines.map(l => (
-                    <div key={l} style={{ fontSize: 13.5, color: '#C4A882', lineHeight: 1.5 }}>{l}</div>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Social */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-              <div style={{ position: 'relative', zIndex: 1, flex: '0 0 auto', width: 44, height: 44, borderRadius: '50%', background: orange, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px -8px rgba(173,79,46,0.7)' }}>
-                {icons.social}
-              </div>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: 14.5, color: '#F8ECE0', marginBottom: 6 }}>Social</div>
-                <div style={{ display: 'flex', gap: 10 }}>
-                  {socialLinks.map(({ name, href, icon }) => (
-                    <a key={name} href={href} target="_blank" rel="noopener" aria-label={name} style={{
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      width: 32, height: 32, borderRadius: '50%',
-                      border: '1.5px solid rgba(230,200,172,0.35)', textDecoration: 'none',
-                    }}>
-                      {icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
+          {/* Coffee art */}
+          <Reveal delay={0.16} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image' }}>
+            <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'relative', width: '100%', maxWidth: 470 }}>
+              <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <SteamRising />
             </div>
-          </div>
-        </Reveal>
-
-        {/* Coffee art — fills the full height of its row/column (matches
-            the height of the form beside it) instead of being sized by its
-            own width and leaving empty space below. */}
-        <Reveal delay={0.18} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image', height: '100%', minHeight: 320 }}>
-          <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-            <SteamRising />
-          </div>
-        </Reveal>
+          </Reveal>
         </div>
 
         {/* Footer bar */}
