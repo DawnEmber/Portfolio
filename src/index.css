@@ -50,6 +50,10 @@ p { margin: 0; }
   grid-template-areas: "image" "headerpara" "info" "form";
   max-width: 640px;
   margin: 0 auto;
+  /* Top-align every cell by default — the image area overrides this back
+     to `stretch` (via align-self) so it alone fills the row's full height
+     instead of sizing to its own content. */
+  align-items: start;
 }
 .dn-contact-divider { display: none; }
 

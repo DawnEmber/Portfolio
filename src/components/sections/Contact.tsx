@@ -42,7 +42,7 @@ const SteamRising = () => (
    row — at mobile/tablet widths they're never adjacent, so the divider
    wouldn't make sense there. */
 const OrnamentalDivider = () => (
-  <div className="dn-contact-divider" style={{ height: '100%', width: 40, opacity: 0.4, gridArea: 'divider' }}>
+  <div className="dn-contact-divider" style={{ height: '100%', width: 40, opacity: 0.4, gridArea: 'divider', alignSelf: 'stretch' }}>
     {/* Short lead-in so the flourish sits near the top, not centered */}
     <div style={{ flex: '0 0 20px', width: 1.5, background: 'linear-gradient(180deg, transparent, rgba(230,200,172,0.7))', filter: 'url(#deInkV)' }} />
     {/* Single simple loop-knot, fully vector so it never blurs, crops,
@@ -252,10 +252,21 @@ export default function Contact() {
           </form>
 
           {/* Coffee art */}
-          <Reveal delay={0.16} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gridArea: 'image' }}>
+          {/* alignSelf:stretch (overriding the grid's own top-alignment)
+              makes this cell match the height of the tallest sibling in its
+              row (the form on desktop) — the image then fills that full
+              height via objectFit:cover, so it ends flush at the bottom
+              instead of sizing to its own aspect ratio and leaving a gap. */}
+          <Reveal delay={0.16} style={{ position: 'relative', display: 'flex', justifyContent: 'center', gridArea: 'image', alignSelf: 'stretch' }}>
             <div style={{ position: 'absolute', inset: '6% 4%', background: 'radial-gradient(58% 52% at 54% 40%, rgba(173,79,46,0.25), rgba(173,79,46,0.06) 55%, transparent 72%)', pointerEvents: 'none' }} />
-            <div style={{ position: 'relative', width: '100%', maxWidth: 470 }}>
-              <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            {/* aspect-ratio is the fallback for rows where this is the only
+                item (mobile: alone in its own row; tablet: paired with a
+                short info list) — height:100% only resolves to something
+                real once a taller sibling (the form, on desktop) actually
+                defines the row's height; otherwise the aspect-ratio takes
+                over so the box never collapses to 0. */}
+            <div style={{ position: 'relative', width: '100%', maxWidth: 470, height: '100%', aspectRatio: '4 / 5' }}>
+              <img src={coffeeImg} alt="Filter coffee by the window" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block', borderRadius: 12 }} />
               <SteamRising />
             </div>
           </Reveal>
